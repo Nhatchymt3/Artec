@@ -1,0 +1,94 @@
+﻿@using Labixa.ViewModels
+@using Outsourcing.Data.Models
+@model Outsourcing.Data.Models.Blog
+@{
+    ViewBag.Title = "GioiThieu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IndexViewModel indexViewModel = ViewBag.indexViewModel;
+}
+
+
+<section class="section-header">
+    <div style="" class="content-mb width-cus">
+        <div class="justify-content-between row" style="margin:auto;">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 pl-5 pr-5">
+                        <!--Breadcumb-->
+                        <div class="row">
+                            <div class="breadcrumb">
+                                <a href="/Home/Index" class="m-r-5">Trang chủ</a>
+                                <span class="m-r-5"> > </span>
+                                <a class="color-breadcumb">Giới thiệu</a>
+                            </div>
+                        </div>
+
+                        <section class="box_left_home mb-3">
+
+                            <h1 class="title-detail">
+                                @Model.Title
+                            </h1>
+                          
+                            @{ 
+                                string date = Model.DateCreated.ToString();
+                                string[] dateSplit = date.Split(' ');
+                            }
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="time_comment_ct mt10">
+                                        <span style="float:left">Cập nhật ngày: @dateSplit[0]</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <p class="tomtat-detail mt-4 mb-4">
+                                @*Học viện Cán bộ Thành phố Hồ Chí Minh thành lập theo quyết định số 1878/QĐ-TTg do Phó Thủ tướng Vũ Đức Đam ký ngày 15/10/2014 trên cơ sở nâng cấp Trường Cán bộ Thành phố Hồ Chí Minh.*@
+                                @Model.Description
+                            </p>
+                            <article class="mt10 blog-detail description-content">
+                                @*<p align="center"></p>
+                                <p align="center"><img src="/Content/tailieu/img/bg-element/image_menu.jpg" alt="" width="600"></p>
+                                <p><span>&nbsp;</span></p>
+                                <p><span>- Học viện Cán bộ</span></p>
+                                <p><span>&nbsp; &nbsp; &nbsp;Học viện Cán bộ Thành phố Hồ Chí Minh thành lập theo quyết định số 1878/QĐ-TTg do Phó Thủ tướng Vũ Đức Đam ký ngày 15/10/2014 trên cơ sở nâng cấp Trường Cán bộ Thành phố Hồ Chí Minh.</span></p>
+                                <p><span>- Trường Cán bộ:</span></p>
+                                <p><span>&nbsp;&nbsp;&nbsp;&nbsp; Trường Cán Bộ Thành phố HCM thành lập theo quyết định số 5509/QĐ-UB-NC ngày 19/10/1998 của UBND TPHCM trên cơ sở sáp nhập trường Chính trị Nguyễn Văn Cừ và trường Hành Chính Thành Phố, nếu tính từ tháng 12 năm 1996 là sự sáp nhập của 4 trường:<br><br>1. Trường Đảng Nguyễn Văn Cừ<br><br>- Thành lập năm 1965.<br>- Nhiệm vụ: Đào tạo và bồi dưỡng chương trình lý luận MAC-LÊNIN cho cán bộ các cơ quan Đảng, chính quyền đoàn thể của TP.<br>- Năm 1994 được Chủ tịch nước tặng huân chương lao động hạng 3.<br><br>2. Trường Hành chính Thành Phố<br><br>- Thành lập tháng 6 năm 1976<br>- Nhiệm vụ: Đào tạo, bồi dưỡng chính quyền các cấp, các ngành phục vụ công tác quản lý nhà nước.<br><br>&nbsp;3. Trường Đào tạo tại chức<br><br>- Thành lập tháng 9 năm 1977<br>- Nhiệm vụ: Đào tạo nâng cao trình độ văn hoá, kiến thức khoa học cho các bậc đại học, bồi dưỡng chuyên môn nhiều lĩnh vực cho cán bộ quản lý TP.<br><br>4. Trung tâm Giáo dục chính trị<br><br>- Thành lập tháng 2 năm 1985.<br>- Nhiệm vụ: Đào tạo, bồi dưỡng chương trình trung cấp chính trị MÁC-LÊNIN, các lớp nghiệp vụ công tác Đảng, huấn luyện, tập huấn báo cáo viên cho các cấp uỷ Đảng.</span></p>
+                                <p></p>
+                                <div id="gtx-trans" style="position: absolute; left: 615px; top: -9px;">
+                                    <div class="gtx-trans-icon"></div>
+                                </div>*@
+                                @Html.Raw(Model.Content)
+                            </article>
+                            <div class="hidden">
+                                <input id="SeoNameChuyenMuc" name="SeoNameChuyenMuc" type="hidden" value="gioi-thieu-chung">
+                            </div>
+
+
+                            @*<div class="left-utilities list-item-utilities mt20 border-top">
+            <div class="font-weight-bold txt_16 mt-2">Các bài viết khác</div>
+            <div class="newslist mt10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list_news_show_home_next ml-3">
+                            <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                                <h2 class="titlecom-2 description txt_14">
+                                    <a href="/vai-net-lich-su-hoc-vien-can-bo-thanh-pho-ho-chi-minh" title="Vài nét lịch sử Học viện Cán bộ Thành phố Hồ Chí Minh">
+                                        Vài nét lịch sử Học viện Cán bộ Thành phố Hồ Chí Minh <i>(04/08/2020)</i>
+                                    </a>
+                                </h2>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("_RightMenuPartial", indexViewModel)
+        </div>
+    </div>
+</section>

@@ -1,0 +1,417 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.ProductFormModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+}
+@using Outsourcing.Core.Extensions;
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+}
+@section botscripts{
+    <script>
+        $(document).ready(function () {
+            $('.multipleselect2').select2();
+        });
+    </script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/Product">Quản lý sản phẩm</a>
+            </li>
+            <li class="active">Chỉnh sửa sản phẩm</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Chỉnh sửa nội dung : @Model.Name
+            </div>
+            @if (Model != null)
+            {
+                using (Html.BeginForm("Edit", "Product", null, FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model =>model.Slug)
+
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab1">
+                                    <i class="green icon icon-home bigger-120"></i>
+                                    Nội dung
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#tab2">
+                                    <i class="red  icon-rocket bigger-120"></i>
+
+                                    Chỉnh sửa SEO
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab3">
+                                    <i class="blue  icon-sort-by-attributes bigger-120"></i>
+                                    Thuộc tính sản phẩm
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#tab4">
+                                    <i class="blue  icon-picture bigger-120"></i>
+                                    Hình ảnh
+                                </a>
+                            </li>
+                            @*<li class="">
+                                    <a data-toggle="tab" href="#tab5">
+                                        <i class="blue  icon-picture bigger-120"></i>
+                                        Tour Liên Quan
+                                    </a>
+                                </li>*@
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade active in">
+                                <!--<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right">Tags</label>
+    <div class="col-sm-9">
+        <select id="mySelect2" class="form-control" multiple="multiple">
+            @{
+                if(Model.ListTagsProduct != null)
+                {
+                    foreach (var temp in Model.ListTagsProduct)
+                {
+                    var flag = false;
+                    foreach (var item in ViewBag.listTagProductMap)
+                    {
+                        if (temp.Value == item.TagId.ToString())
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag)
+                    {
+                        <option selected value="@temp.Value">@temp.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@temp.Value">@temp.Text</option>
+                    }
+                }
+                }
+
+            }
+        </select>
+        @Html.Hidden("hfSelected")-->
+                                @*@Html.DropDownList("mySelect2", Model.ListTagBlog, new { multiple = "multiple" })*@
+                                <!--</div>
+    </div>-->
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.ProductCategoryId)
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(model => model.ProductCategoryId, Model.ListProductCategory)
+                                        @Html.ValidationMessageFor(model => model.ProductCategoryId)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Name)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Name)
+                                        @Html.ValidationMessageFor(model => model.Name)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.IsPublic)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.IsPublic)
+                                        @Html.ValidationMessageFor(model => model.IsPublic)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.Position)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.Position)
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+        </div>
+        <div class="form-group ">
+            @Html.MyLabelFor(model => model.IsHomePage)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.IsHomePage)
+                @Html.ValidationMessageFor(model => model.IsHomePage)
+            </div>
+        </div>*@
+
+                                @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.ProductImage)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.ProductImage)
+                <a href="javascrip:void(0)" id="GetElImage" class="btn btn-success"><i class="icon-upload"></i>Chọn ảnh</a>
+                @Html.ValidationMessageFor(model => model.ProductImage)
+            </div>
+        </div>*@
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Description)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Description)
+                                        @Html.ValidationMessageFor(model => model.Description)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Price)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Price)
+                                        @Html.ValidationMessageFor(model => model.Price)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.OldPrice)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.OldPrice)
+                                        @Html.ValidationMessageFor(model => model.OldPrice)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Content)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Content, "CkEditor")
+                                        @Html.ValidationMessageFor(model => model.Content)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.NameEng)
+            <div class="col-sm-9">
+                @Html.TextBoxFor(model => model.NameEng, new { @type = "file" })
+                @Html.ValidationMessageFor(model => model.NameEng)
+            </div>
+        </div>*@
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.ContentEng)
+                                    <div class="col-sm-9">
+                                        @Html.TextBoxFor(model => model.ContentEng, Model.ContentEng)
+                                        @Html.ValidationMessageFor(model => model.ContentEng)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.DescEng)
+                                    <div class="col-sm-9">
+                                        @*@Html.TextBoxFor(model => model.FileUpload, new { @type = "file", @id = "file-upload"})*@
+                                        <input type="file" name="FileUpload" accept=".pdf,.doc,.docx" />
+                                        <p>File hiện tại: @Model.DescEng</p>
+                                        @Html.TextBoxFor(model => model.DescEng, Model.DescEng, new { @hidden = "true" })
+                                        @Html.TextBoxFor(model => model.Tags, Model.Tags, new { @hidden = "true" })
+                                        @Html.ValidationMessageFor(model => model.DescEng)
+                                    </div>
+                                </div>
+
+                               
+                                @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.NameEng)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.NameEng)
+                @Html.ValidationMessageFor(model => model.NameEng)
+            </div>
+        </div>
+        <div class="form-group ">
+            @Html.MyLabelFor(model => model.DescEng)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.DescEng)
+                @Html.ValidationMessageFor(model => model.DescEng)
+            </div>
+        </div>
+        <div class="form-group ">
+            @Html.MyLabelFor(model => model.ContentEng)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.ContentEng, "CkEditor")
+                @Html.ValidationMessageFor(model => model.ContentEng)
+            </div>
+        </div>*@
+                                @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.LikeProduct)
+            <div class="col-sm-9">
+                @Html.TextBoxFor(model => model.LikeProduct, new { @type = "number" })
+                @Html.ValidationMessageFor(model => model.LikeProduct)
+            </div>
+        </div>*@
+                            </div>
+
+                            <div id="tab2" class="tab-pane fade">
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaKeywords)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaKeywords)
+                                        @Html.ValidationMessageFor(model => model.MetaKeywords)
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaTitle)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaTitle)
+                                        @Html.ValidationMessageFor(model => model.MetaTitle)
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaDescription)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaDescription)
+                                        @Html.ValidationMessageFor(model => model.MetaDescription)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Slug)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Slug)
+                                        @Html.ValidationMessageFor(model => model.Slug)
+                                    </div>
+                                </div>*@
+                            </div>
+
+
+                            <div id="tab3" class="tab-pane fade">
+                                <a class="btn btn-success" data-href="@Model.Id" data-toggle="modal" data-target="#create-attribute" style="margin-bottom:10px">Thêm Thuộc tính</a>
+                                @Html.EditorFor(m => m.ProductAttributeMappings)
+                                @*@Html.RenderPartial("_AttributeProductMapping", Model.ProductAttributeMappings)*@
+                            </div>
+
+                            <div id="tab4" class="tab-pane fade">
+                                    <div></div>
+                                    <div class="form-group ">
+                                        @Html.EditorFor(model => model.ProductPictureMappings)
+                                    </div>`
+                                </div>
+                            @*<div id="tab5" class="tab-pane fade">
+                                    @Html.MyLabelFor(model => model.Id1)
+                                    <div class="form-group ">
+                                        @Html.DropDownListFor(model => model.Id1, Model.ListProducts)
+                                        @Html.ValidationMessageFor(model => model.Id1)
+                                    </div>
+                                    @Html.MyLabelFor(model => model.Id2)
+                                    <div class="form-group ">
+                                        @Html.DropDownListFor(model => model.Id2, Model.ListProducts)
+                                    </div>
+                                    @Html.MyLabelFor(model => model.Id3)
+                                    <div class="form-group ">
+                                        @Html.DropDownListFor(model => model.Id3, Model.ListProducts)
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+
+
+
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/Product")
+                }
+            }
+            else
+            {
+                <h1>Không tìm thấy sản phẩm!</h1>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="create-attribute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Thêm thuộc tính</h2>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="idproduct" id="idproduct" value="" />
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tên thuộc tính:</label>
+                        <input type="text" class="form-control" id="attribute-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Mô tả:</label>
+                        <input type="text" class="form-control" id="attribute-description">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Giá thuộc tính:</label>
+                        <input type="number" min="0" value="0" class="form-control" id="attribute-price">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+                <a href="#" onclick="create_click()" class="btn btn-danger danger">Có</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#create-attribute').on('show.bs.modal', function (e) {
+        var productId = $(e.relatedTarget).data('href');
+        $('#idproduct').val(productId);
+        //console.log($(e.relatedTarget).data('href'));
+        //$(this).find('.danger').a;
+    });
+    function validateValue() {
+        if ($('#attribute-name').val() == "") {
+            alert("Atttribute name isn't empty");
+            return false;
+        }
+        if ($('#attribute-description').val() == "") {
+            alert("Attribute description isn't empty");
+            return false;
+        }
+        return true;
+    }
+    function create_click() {
+
+        var productId = $('#idproduct').val();
+        var attributeName = $('#attribute-name').val();
+        var attributePrice = $('#attribute-price').val();
+        var attributeDes = $('#attribute-description').val();
+        if (validateValue()) {
+            $.ajax({
+                type: "post",
+                url: "/Admin/Product/AddAttributeProduct",
+                data: { "idproduct": productId, "attributeName": attributeName, "attributePrice": attributePrice, "attributeDes": attributeDes },
+                success: function (result) {
+                    if (result.code == 1) {
+                        //window.location.replace(window.location.pathname + window.location.search);
+                        window.location.reload();
+                        //$("#myTab").tabs({ active: "tab3" });
+                    } else {
+                        alert(result.Message);
+                    }
+                }
+            });
+        }
+    };
+
+    $(function () {
+        $("#mySelect2").select2();
+        $('#mySelect2').on('change', function (e) {
+            console.log($(this).val());
+            $('#hfSelected').val($(this).val());
+        });
+    });
+
+</script>

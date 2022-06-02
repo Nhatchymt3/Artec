@@ -1,0 +1,149 @@
+﻿@using Outsourcing.Core
+@model Outsourcing.Data.Models.Order
+@{
+    ViewBag.Title = "Create";
+}
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/admin/order">Quản lý Order</a>
+            </li>
+            <li class="active">Xem Order</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Xem đơn hàng
+            </div>
+            @using (Html.BeginForm("Create", "Order", null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab1">
+                                <i class="green icon icon-home bigger-120"></i>
+                                Nội dung
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade active in">
+                            <div class="form-group ">
+                                <label class="col-sm-3 control-label no-padding-right" for="CustomerName">Tên Khách Hàng</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.CustomerName, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+                                @Html.MyLabelFor(model => model.CustomerAddress)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.CustomerAddress, new { disabled = "disabled" })
+                                </div>
+                            </div>*@
+                        <div class="form-group ">
+                            <label class="col-sm-3 control-label no-padding-right" for="CustomerName">Số Điện Thoại</label>
+
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.CustomerPhone, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                            @*<div class="form-group ">
+                                @Html.MyLabelFor(model => model.CustomerEmail)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.CustomerEmail, new { disabled = "disabled" })
+                                </div>
+                            </div>*@
+                        <div class="form-group ">
+                            <label class="col-sm-3 control-label no-padding-right" for="CustomerName">Tổng đơn hàng</label>
+
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.OrderTotal, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                            @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.Deleted)
+            <div class="col-sm-9">
+                <h6>
+                    @Html.EditorFor(model => model.Deleted)
+                    @Html.ValidationMessageFor(model => model.Deleted)
+                    Đã xóa
+                </h6>
+            </div>
+        </div>*@
+                            @*<div class="form-group ">
+                                @Html.MyLabelFor(model => model.Note)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.Note, new { disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Note)
+                                </div>
+                            </div>*@
+                            <div class="form-group ">
+                                <label class="col-sm-3 control-label no-padding-right" for="OrderTotal">Chi tiết đơn hàng</label>
+                                <div class="col-sm-9">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Mã SP</td>
+                                                <td>Tên Sản phẩm</td>
+                                                <td>Loại SP</td>
+                                                <td>Số lượng</td>
+                                                <td>Đơn giá</td>
+                                                <td>Thành Tiền</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.OrderItems)
+                                            {
+                                            <tr>
+                                                <td>SP_@item.Id</td>
+                                                <td>@item.Product.Name</td>
+                                                <td>@item.AttributeName</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Price.ToString("#,##0")</td>
+                                                <td>@((item.Quantity*item.Price).ToString("#,##0"))</td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+                @*
+            partial for group button
+                *@
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                &nbsp; &nbsp; &nbsp;
+                <a href="/Admin/Order" class="btn btn-warning">Back</a>
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+</div>

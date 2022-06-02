@@ -1,0 +1,59 @@
+﻿@using Outsourcing.Core
+@model Outsourcing.Data.Models.ProductPictureMapping
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.ProductId)
+@Html.HiddenFor(model => model.PictureId)
+@Html.HiddenFor(model => model.IsMainPicture)
+@Html.HiddenFor(model => model.DisplayOrder)
+@Html.HiddenFor(model => model.Title)
+
+@Html.HiddenFor(model => model.Picture.Id)
+@Html.HiddenFor(model => model.Picture.IsDeleted)
+@Html.HiddenFor(model => model.Picture.Description)
+@Html.HiddenFor(model => model.Picture.MimeType)
+@Html.HiddenFor(model => model.Picture.Binary)
+
+@*@if (Model.Product.Id == 50 || Model.Product.Id == 51 || Model.Product.Id == 52)
+    {
+         <div class="col-sm-2" style="float:left; margin-right:35px">
+                @Html.EditorFor(model => model.Picture.Url, "GetImageFromElfinderPhoto")
+                @Html.ValidationMessageFor(model => model.Picture.Url)
+            </div>
+    }
+    else
+    {
+            if (Model.IsMainPicture)
+        {
+            <label class="col-sm-3 control-label no-padding-right" for="">Ảnh đại diện</label>
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.Picture.Url, "GetImageFromElfinder")
+                @Html.ValidationMessageFor(model => model.Picture.Url)
+            </div>
+        }
+        else
+        {
+            @Html.MyLabelFor(model => model.Picture.Url)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.Picture.Url, "GetImageFromElfinder")
+                @Html.ValidationMessageFor(model => model.Picture.Url)
+            </div>
+        }
+    }*@
+    @if (Model.IsMainPicture)
+        {
+<label class="col-sm-3 control-label no-padding-right" for="">Ảnh đại diện</label>
+<div class="col-sm-9">
+    @Html.EditorFor(model => model.Picture.Url, "GetImageFromElfinder")
+    @Html.ValidationMessageFor(model => model.Picture.Url)
+</div>
+        }
+        else
+        {
+@Html.MyLabelFor(model => model.Picture.Url)
+<div class="col-sm-9">
+    @Html.EditorFor(model => model.Picture.Url, "GetImageFromElfinder")
+    @Html.ValidationMessageFor(model => model.Picture.Url)
+</div>
+        }
+

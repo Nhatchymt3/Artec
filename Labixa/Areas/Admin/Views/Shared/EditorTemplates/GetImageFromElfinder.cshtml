@@ -1,0 +1,13 @@
+﻿@{
+    var fieldName = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var imageId = "img" + ViewData.TemplateInfo.HtmlFieldPrefix;
+
+}
+
+<img src="@Model" id="@imageId" style="width: 200px;" />
+@Html.HiddenFor(x => x, new { @class = "col-xs-12 col-md-8 ", @id = fieldName })
+
+<a href="javascrip:void(0)" id="GetElImage" class="btn btn-success getimagefromelfinder">
+    <i class="icon-upload"></i>Chọn Hình 
+</a>
+

@@ -1,0 +1,49 @@
+﻿
+@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.AlbumPhotoFormModel
+@using Outsourcing.Core.Extensions;
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+
+@Html.HiddenFor(model => model.ProductCategoryId)
+
+@Html.HiddenFor(model => model.Name)
+
+@Html.HiddenFor(model => model.IsPublic)
+
+@Html.HiddenFor(model => model.Position)
+
+@Html.HiddenFor(model => model.IsHomePage)
+
+@Html.HiddenFor(model => model.Price)
+@Html.HiddenFor(model => model.MetaDescription)
+@Html.HiddenFor(model => model.MetaKeywords)
+@Html.HiddenFor(model => model.MetaTitle)
+@Html.HiddenFor(model => model.Description)
+@Html.HiddenFor(model => model.Price)
+@Html.HiddenFor(model => model.OldPrice)
+@Html.HiddenFor(model => model.Content)
+@Html.HiddenFor(model => model.Slug)
+@Html.HiddenFor(model => model.ProductAttributeMappings)
+@Html.HiddenFor(model => model.Id1)
+@Html.HiddenFor(model => model.Id2)
+@Html.HiddenFor(model => model.Id3)
+@Html.HiddenFor(model => model.Slug)
+
+
+@Html.EditorFor(model => model.ProductPictureMappings)
+
+            }
+            else
+            {
+<h1>Không tìm thấy sản phẩm!</h1>
+            }
+
+        }
+
+

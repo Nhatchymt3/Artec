@@ -1,0 +1,122 @@
+﻿@using Outsourcing.Data.Models
+@using Labixa.ViewModels
+@model IEnumerable<Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="catagory-section" @*data-aos="fade-up" data-aos-duration="1000"*@>
+    <div class="container">
+        <div class="row" style="margin-top: 100px; display: flex; justify-content:center">
+            <div class="col-md-2">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-tham-khao"})">
+                    <div class="single-catagory">
+                        <img src="/Content/tailieu/img/bg-element/book.svg" style="height:30px;" alt="Tài liệu tham khảo" />
+                        <h6 style="height: 80px;">Tài liệu tham khảo</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "luan-van-de-tai"})">
+                    <div class="single-catagory">
+                        <img src="/Content/tailieu/img/bg-element/file-earmark-text.svg" style="height:30px;" alt="Luận văn đề tài" />
+                        <h6 style="height: 80px;">Luận văn đề tài</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-khac"})">
+                    <div class="single-catagory">
+                        <img src="/Content/tailieu/img/bg-element/bookmark-star.svg" style="height:30px;" alt="Tài liệu khác" />
+                        <h6 style="height: 80px;">Tài liệu khác</h6>
+                    </div>
+                </a>
+            </div>
+  
+        </div>
+        <div class="catagoty-product">
+            <div class="row">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        string day = item.DateCreated.ToString();
+                        string[] daySplit = day.Split(' ');
+
+                        <div class="col-md-3">
+                            <div class="simgle-catagory-product">
+                                <div class="sss-img">
+                                    <img src="@item.ProductImage" alt="@item.Name" />
+                                </div>
+                                <div class="sss-text">
+                                    <a href="@Url.Action("Detail","Home", new { slug = item.Slug})">
+                                        <h6 class="maxline-3 text-align-justify" style="height:63px">@item.Name</h6>
+                                    </a>
+                                </div>
+                                <div class="grid-container">
+                                    <div class="grid-item">
+                                        <div class="m-r-5">
+                                            <img class="img-h-12" src="/Content/tailieu/img/bg-element/calendar3.svg">
+                                        </div>
+                                        <span>@daySplit[0]</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <div class="m-r-5">
+                                            <img class="img-h-12" src="/Content/tailieu/img/bg-element/filetype-pdf.svg">
+                                        </div>
+                                        <span>@item.ContentEng MB</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <div class="m-r-5">
+                                            <img class="img-h-12" src="/Content/tailieu/img/bg-element/folder-symlink.svg">
+                                        </div>
+                                        <strong style="color:red">@item.Price.ToString("#,##0")đ</strong>
+
+                                    </div>
+                                    <div class="grid-item">
+                                        <div class="m-r-5">
+                                            <img class="img-h-12" src="/Content/tailieu/img/bg-element/eye.svg">
+                                        </div>
+                                        @{
+                                            if (item.Stock == null)
+                                            {
+                                                <span>0</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@item.Stock</span>
+                                            }
+                                        }
+                                        <div class="m-r-5 m-l-5">
+                                            <img class="img-h-12" src="/Content/tailieu/img/bg-element/download.svg">
+                                        </div>
+                                        @{
+                                            if (item.LikeProduct == null)
+                                            {
+                                                <span>0</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@item.LikeProduct</span>
+                                            }
+                                        }
+                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="row" style="text-align: center">
+                        Không có dữ liệu
+                    </div>
+                }
+
+             
+            </div>
+        </div>
+    </div>
+</div>

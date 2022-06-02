@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+@model Labixa.Areas.Admin.ViewModel.ProductCategoryFormModel
+@using Outsourcing.Data.Models;
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li><a href="/Admin/ProductCategory/">Quản lý Danh Mục Tin</a></li>
+            <li class="active">Tạo Mới Danh Mục Tin</li>
+        </ul>
+    </div>
+}
+
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Thêm mới Danh Mục
+            </div>
+            <form action="/Admin/ProductCategory/Create" class="form-horizontal" method="post" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Tên Danh Mục (*): </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Danh Mục Cha (*) </label>
+                    <div class="col-sm-9 ">
+                        @Html.DropDownListFor(model => model.Position, Model.ListCategory)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Mô Tả (*): </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Description, "CkEditor")
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+                <div class="validation-summary-valid validation-message" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>            
+                @*
+        partial for group button
+                *@
+                @Html.Partial("_PartialButtonGroup", "/Admin/ProductCategory")
+            </form>
+        </div>
+    </div>
+</div>

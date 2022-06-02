@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "ViewEnglish";
+}
+
+<h2>Manage Resouces</h2>
+<div >
+    <a href="javascript:void(0)" class="btn" onclick="changeCookieVN()">View Resources Viet Nam</a>
+    <a href="javascript:void(0)" class="btn" onclick="changeCookieEN()">View Resources English</a>
+</div>
+<script>
+    function clearCookie() {
+
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    function getCookie(cname) {
+        
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function changeCookieVN() {
+        delete_cookie("_culture");
+        var username = getCookie("_culture");
+        if (username != "") {
+            delete_cookie("_culture");
+            setCookie("_culture", "vi", 365);
+            var username2 = getCookie("_culture");
+        } else {
+        
+                setCookie("_culture", "vi", 365);
+                var username3 = getCookie("_culture");
+         
+        }
+        document.location.href = "/Admin/Resources/ViewVietNam"
+    }
+    function changeCookieEN() {
+        delete_cookie("_culture");
+        var username = getCookie("_culture");
+        if (username != "") {
+            delete_cookie("_culture");
+            setCookie("_culture", "en", 365);
+            var username2 = getCookie("_culture");
+        } else {
+          
+                setCookie("_culture", "en", 365);
+                var username3 = getCookie("_culture");
+           
+        }
+        document.location.href = "/Admin/Resources/ViewEnglish"
+    }
+    function delete_cookie(name) {
+        var cname = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1);
+            if (c.indexOf(cname) != -1)
+                document.cookie = name + '=; expires=-1;';
+        }
+      
+    }
+</script>

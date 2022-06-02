@@ -1,0 +1,98 @@
+﻿@using Outsourcing.Data.Models
+@using PagedList.Mvc
+@using Labixa.ViewModels
+@model  PagedList.IPagedList<Blog>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IndexViewModel indexViewModel = ViewBag.indexViewModel;
+}
+
+<section class="section-header">
+    <div style="" class="content-mb width-cus">
+        <div class="justify-content-between row" style="margin:auto;">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 pl-5 pr-5">
+                        <!--Breadcumb-->
+                        <div class="row">
+                            <div class="breadcrumb">
+                                <a href="/Home/Index" class="m-r-5">Trang chủ</a>
+                                <span class="m-r-5"> > </span>
+                                <a class="color-breadcumb">Tìm kiếm</a>
+                            </div>
+                        </div>
+
+                        <!--first blog-->
+                        <div class="row" >
+                            <form action="/Home/Search"
+                                      class="search-form"
+                                      method="get"
+                                      enctype="multipart/form-data" style="padding-left: 0; padding-right: 0;">
+                                <input type="text" id="search-2"
+                                           name="search" value="@indexViewModel.keySearch" class="m-1 input-search" style="padding:0 5px"/>
+                                <input type="submit" name="name" value="Tìm kiếm" class="m-1" onclick="submit()"/>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="newslist">
+                            @if (Model != null && Model.Any())
+                            {
+                                for (int i = 0; i < Model.Count; i++)
+                                {
+                                    string day = Model[i].DateCreated.ToString();
+                                    string[] daySplit = day.Split(' ');
+
+                                    <article class="item-news article-topstory item-news-common item-list-news">
+                                        <a title="@Model[i].Title" href="@Url.Action("ChiTietTinTuc", "Home", new { slug = Model[i].Slug})">
+                                            <div class="thumb-art-left">
+                                                <picture>
+                                                    <img itemprop="contentUrl" src="@Model[i].BlogImage" class="img-fluid" style="width: 100%; height:auto">
+                                                </picture>
+                                            </div>
+                                            <h3 class="titlecom-2 title-news txt_16 mt5 title-color-blue text-align-justify">
+                                                @Model[i].Title
+                                            </h3>
+                                            <div class="time_comment text-left mt5 mb5"><i>@daySplit[0]</i></div>
+                                            <p class="description txt_14 titlecom-4 text-align-justify">
+                                                @Model[i].Description
+                                            </p>
+                                        </a>
+                                    </article>
+                                }
+                            }
+                            else
+                            {
+                                <div class="row  mt-5" style="text-align: center;">
+                                    <p>Không có dữ liệu</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center mb15">
+                            <div class="pager ">
+
+                                @Html.PagedListPager(Model, page => Url.Action("Search", new { search = indexViewModel.keySearch, page }))
+
+                                @*<ul class="pagination justify-content-end"><li class="page-item active"><span class="page-link">1</span></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=2">2</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=3">3</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=4">4</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=5">5</a></li><li class="next-page page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=2">›</a></li><li class="last-page page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=41">»</a></li></ul>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("_RightMenuPartial", indexViewModel)
+        </div>
+    </div>
+</section>
+@*<script>
+    function submit() {
+        $('#search-form').submit();
+    }
+</script>*@
+

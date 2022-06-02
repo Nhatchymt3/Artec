@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+@model Labixa.Areas.Admin.ViewModel.StaffFormModel
+@using Outsourcing.Core
+@using Outsourcing.Data.Models;
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li><a href="/Admin/Staff/">Quản lý Nhân Viên</a></li>
+            <li class="active">Tạo Mới Nhân Viên</li>
+        </ul>
+    </div>
+}
+
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Thêm mới Nhân Viên
+            </div>
+            <form action="/Admin/Staff/Create" class="form-horizontal" method="post" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Tên Nhân Viên (*): </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Số Điện Thoại (*): </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Phone)
+                        @Html.ValidationMessageFor(model => model.Phone)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Vị trí: </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Type)
+                        @Html.ValidationMessageFor(model => model.Type)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Yahoo: </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Yahoo)
+                        @Html.ValidationMessageFor(model => model.Yahoo)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Skype: </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Skype)
+                        @Html.ValidationMessageFor(model => model.Skype)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Mô Tả (*): </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Description, "CkEditor")
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="col-sm-3 control-label no-padding-right">Hình Ảnh: </label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Image, "GetImageFromElfinder")
+                      @*  <a href="javascrip:void(0)" id="GetElImage" class="btn btn-success"><i class="icon-upload"></i>Chọn ảnh</a>*@
+                        @Html.ValidationMessageFor(model => model.Image)
+                    </div>
+                </div>
+                <div class="validation-summary-valid validation-message" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>            <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="icon-ok bigger-110"></i>
+                            Lưu
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            Làm lại
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <a href="/Admin/Staff" style="text-decoration:none" class="btn btn-warning">
+                            <i class="icon-undo bigger-110"></i>
+                            Trở Về
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

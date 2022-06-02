@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "detailTour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Outsourcing.Data.Models.Blog
+<section class="header-page fade-up header-page-about-us" style="background-size: 100% auto;">
+    <div class="bounce-in animate4"></div>
+</section>
+<div class="divider"><span></span></div>
+<section id="internalpage">
+
+    <!--start container-->
+    <div class="container clearfix">
+
+
+        <!--start content-->
+        <div class="grid_8 centersinglegrid">
+            @{
+            HttpCookie cookie = Request.Cookies["_culture"];
+            }
+            @if (cookie.Value.Equals("vi"))
+            {
+            <!--start post-->
+                <div class="singlepost orange">
+
+
+
+                    <h1 class="titlesinglepost">@Model.Title</h1>
+                    @Html.Raw(Model.Content)
+                </div>
+            <!--end post-->
+            }
+            else
+            {
+            <!--start post-->
+                <div class="singlepost orange">
+
+
+
+                    <h1 class="titlesinglepost">@Model.TitleEng</h1>
+                    @Html.Raw(Model.ContentEng)
+                </div>
+            <!--end post-->
+            }
+
+        </div>
+        <!--end content-->
+
+    </div>
+    <!--end container-->
+
+</section>

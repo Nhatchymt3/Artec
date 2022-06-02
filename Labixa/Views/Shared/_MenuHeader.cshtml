@@ -1,0 +1,118 @@
+﻿
+<header class="header-area">
+    <div class="container-fluid custom-container">
+        <div class="row align-items-center" style="z-index: 1">
+            <div class="col-4 col-md-1">
+                <div class="logo-wrapper" style="margin: 10px 0 10px 0;">
+                    <a href="/Home/Index">
+                        <img src="/Content/tailieu/img/bg-element/logoHVCB.png" alt="Logo" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-2 col-md-9 order-md-2 order-3">
+                <div class="boomrom-nav">
+                    <div class="menu-wrapper">
+                        <nav class="main-nav">
+                            <input id="main-menu-state" type="checkbox" />
+                            <label class="main-menu-btn" for="main-menu-state" style="z-index: 1">
+                                <span class="main-menu-btn-icon"></span>
+                            </label>
+
+                            <ul id="main-menu" class="sm sm-mint ml-5">
+                                <li>
+                                    <a class="font-20" href="/Home/GioiThieu">Giới thiệu</a>
+                                    @*<ul>
+                                        <li><a href="index.html">Home 1</a></li>
+                                        <li><a href="index-2.html">Home 2</a></li>
+                                        <li><a href="index-3.html">Home 3</a></li>
+                                    </ul>*@
+                                </li>
+                                <li>
+                                    <a class="font-20" href="/Home/TinTuc">Tin tức</a>
+                                    @*<ul>
+                                        <li><a href="blog-left.html">Blog Left</a></li>
+                                        <li><a href="blog-right.html">Blog Right</a></li>
+                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                        <li><a href="blog-masonry.html">Blog Masonry</a></li>
+                                    </ul>*@
+                                </li>
+                                <li>
+                                    <a class="font-20" href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-tham-khao"})">Tài liệu tham khảo</a>
+                                    @* <ul>
+                                        <li><a href="blog-left.html">Blog Left</a></li>
+                                        <li><a href="blog-right.html">Blog Right</a></li>
+                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                        <li><a href="blog-masonry.html">Blog Masonry</a></li>
+                                    </ul>*@
+                                </li>
+                                <li>
+                                    <a class="font-20" href="@Url.Action("IndexCategory","Home", new { slug = "luan-van-de-tai"})">Luận văn đề tài</a>
+                                    @*<ul>
+                                        <li><a href="faq.html">Faq</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="our-team.html">Our Team</a></li>
+                                        <li><a href="about-us.html">About Us</a></li>
+                                    </ul>*@
+                                </li>
+                                <li>
+                                    <a class="font-20" href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-khac"})">Tài liệu khác</a>
+                                    @*<ul>
+                                        <li><a href="shop-left.html">Shop Left</a></li>
+                                        <li><a href="shop-right.html">Shop Right</a></li>
+                                        <li>
+                                            <a href="single-product.html">Single Product</a>
+                                        </li>
+                                    </ul>*@
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 order-md-3 order-2">
+                <div class="header-extra-features">
+                    <div class="search">
+                        <i id="search-btn"><img src="~/Content/tailieu/img/search.svg" alt="Alternate Text" /></i>
+                    </div>
+                    @*<div class="cart">
+                        <a href="checkout.html">
+                            <i class="flaticon-shopping-bags"></i>
+                        </a>
+                    </div>*@
+                    <div id="search-overlay" class="block" style="z-index: 9999;">
+                        <div class="centered">
+                            <div id="search-box">
+                                <i id="close-btn" class=" fa-2x" style="z-index: 9999; width: 2%"><img src="~/Content/tailieu/img/clear.png" alt="Cancel" /></i>
+                                <form action="/Home/Search"
+                                      class="search-form"
+                                      method="get"
+                                      enctype="multipart/form-data" >
+                                
+                                    <input id="search"
+                                           name="search"
+                                           placeholder="Search"
+                                           type="text"
+                                           />
+                                    <button id="search-button"
+                                            class="search-button"
+                                            type="button"
+                                            value="Submit"
+                                            onclick="submit()">
+                                        <span>Search</span>
+                                    </button>
+
+                                </form>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    function submit() {
+        $('.search-form').submit();
+    }
+</script>

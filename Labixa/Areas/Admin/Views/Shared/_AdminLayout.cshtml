@@ -1,0 +1,830 @@
+﻿@model dynamic
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @*<title>Trang Quản Trị PetPro</title>*@
+    <link rel="stylesheet" href="~/Content/admin/css/validateMessge.css" />
+    @Styles.Render("~/Style/Common")
+    @RenderSection("head", required: false)
+    @Scripts.Render("~/Scripts/Common")
+    @RenderSection("scripts", required: false)
+</head>
+<body onload="delete_cookie('_culture')">
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="/" class="navbar-brand">
+                    <small>
+                        <i class="icon-money icon-dashboard"></i>
+                        @*<img src="https://petpro.com.vn/assets/logo.061b39cb.svg" />*@
+                        Quản lý website tài liệu
+                    </small>
+                </a>
+            </div>
+            <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                <small>Welcome,</small>
+                                @User.Identity.Name
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            @*<li>
+                                    <a href="#">
+                                        <i class="icon-cog"></i>
+                                        Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="Admin/PermissionAccount/ChangePassAccount">
+                                        <i class="icon-user"></i>
+                                        Đổi mật khẩu
+                                    </a>
+                                </li>*@
+                            <li class="divider"></li>
+                            <li>
+                                @*@Html.ActionLink("Đăng xuất", "SignOut", "Account")*@
+                                <a href="/Account/SignOut">
+                                    Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-container-inner">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                    @*<button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>*@
+                </div>
+
+                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini" style="
+                                      background: #A83F3F;
+                                  ">
+                    @*<span class="btn btn-success"></span>
+
+                        <span class="btn btn-info"></span>
+
+                        <span class="btn btn-warning"></span>
+
+                        <span class="btn btn-danger"></span>*@
+                </div>
+            </div>
+            <ul class="nav nav-list">
+                @*<li>
+            <a href="~/">
+                <i class="icon-dashboard"></i>
+                <span class="menu-text">Thống kê </span>
+            </a>
+        </li>*@
+                @*<li>
+            <a href="/Admin/File">
+                <i class="icon-file"></i>
+                <span class="menu-text">Thư mục lưu trữ</span>
+            </a>
+        </li>*@
+
+                <!--<li class="">
+    <a href="#" class="dropdown-toggle">
+        <i class="icon-list"></i>
+        <span class="menu-text">
+            Danh mục
+            <span class="badge badge-primary ">2</span>
+        </span>
+        <b class=""></b>
+    </a>
+    <ul class="submenu" style="overflow: hidden; display: none;">
+        <li>
+            <a href="/Admin/BlogCategory">
+                <i class="icon-double-angle-right"></i>
+                Xem tất cả danh mục
+            </a>
+        </li>-->
+                @*@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <li>
+                <a href="/Admin/BlogCategory/Create">
+                    <i class="icon-double-angle-right"></i>
+                    Thêm danh mục
+                </a>
+            </li>
+        }*@
+
+
+                <!--</ul>
+    </li>-->
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-edit"></i>
+                            <span class="menu-text">
+                                Quản lý bài viết
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Blog">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả bài viết
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+
+                            <li>
+                                <a href="/Admin/Blog/Create">
+                                    <i class="icon-double-angle-right"></i>
+                                    Thêm bài viết
+                                </a>
+                            </li>
+                            }
+
+                        </ul>
+                    </li>
+                    @*<li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-edit"></i>
+                            <span class="menu-text">
+                                Quản lý dịch vụ
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/blog/PageStatic?id=15">
+                                    <i class="icon-double-angle-right"></i>
+                                    Dịch vụ
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/Admin/Blog/PageStatic?id=16">
+                                    <i class="icon-double-angle-right"></i>
+                                    Chuyên khoa
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>*@
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-edit"></i>
+                            <span class="menu-text">
+                                Quản lý  thông tin
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/blog/PageStatic?id=7">
+                                    <i class="icon-double-angle-right"></i>
+                                    Thông tin học viện Cán bộ
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-list"></i>
+                            <span class="menu-text">
+                                Danh mục tài liệu
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/ProductCategory">
+                                    <i class="icon-double-angle-right"></i>
+                                    Danh mục tài liệu
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+
+                                @*<li>
+                            <a href="/Admin/ProductCategory/Create">
+                                <i class="icon-double-angle-right"></i>
+                                Thêm mới Danh Mục
+                            </a>
+                        </li>*@
+                            }
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="  icon-shopping-cart"></i>
+                            <span class="menu-text">
+                                Quản lý tài liệu
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Product">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả tài liệu
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <li>
+                                    <a href="/Admin/Product/Create">
+                                        <i class="icon-double-angle-right"></i>
+                                        Tải tài liệu
+                                    </a>
+                                </li>
+                            }
+                            @*<li>
+                        <a href="/Admin/ProductAttribute">
+                            <i class="icon-double-angle-right"></i>
+                            Quản lý thuộc tính sản phẩm
+                        </a>
+                    </li>*@
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-calendar"></i>
+                            <span class="menu-text">
+                                Quản lý Order
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Order">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả order
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+
+                                @*<li>
+                            <a href="/Admin/Order/Create">
+                                <i class="icon-double-angle-right"></i>
+                                Thêm mới order
+                            </a>
+                        </li>*@
+                            }
+                        </ul>
+
+                    </li>
+                    <!--<li>
+                        <a href="#" class="dropdown-toggle">-->
+                            @*<i class="icon-user-friends"></i>*@
+                            <!--<i class="icon-group"></i>
+                            <span class="menu-text">
+                                Quản lý phòng ban
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Department">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả phòng ban
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+
+                                <li>
+                                    <a href="/Admin/Department/Create">
+                                        <i class="icon-double-angle-right"></i>
+                                        Thêm mới phòng ban
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class=" icon-location-arrow"></i>
+                            <span class="menu-text">
+                                Quản lý địa điểm
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Location">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả địa điểm
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+
+                                <li>
+                                    <a href="/Admin/Location/Create">
+                                        <i class="icon-double-angle-right"></i>
+                                        Thêm mới địa điểm
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-search"></i>
+                            <span class="menu-text">
+                                Quản lý tuyển dụng
+                                <span class="badge badge-primary ">2</span>
+                            </span>
+                            <b class=""></b>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            <li>
+                                <a href="/Admin/Recruit">
+                                    <i class="icon-double-angle-right"></i>
+                                    Xem tất cả tuyển dụng
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <li>
+                                    <a href="/Admin/Recruit/Create">
+                                        <i class="icon-double-angle-right"></i>
+                                        Thêm mới tuyển dụng
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </li>-->
+                }
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class=" icon-shield"></i>
+                            <span class="menu-text">
+                                Quản lý Website
+                                <span class="badge badge-primary ">5</span>
+                            </span>
+                        </a>
+                        <ul class="submenu" style="overflow: hidden; display: none;">
+                            @*<li>
+                                <a href="/Admin/WebsiteAttribute/">
+                                    <i class="icon-double-angle-right"></i>
+                                    Quản lý Website
+                                </a>
+                            </li>*@
+                            @*<li>
+            <a href="/Admin/WebsiteAttribute/HomepageAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Trang Home
+                </span>
+            </a>
+        </li>*@
+                            @*<li>
+            <a href="/Admin/WebsiteAttribute/BannerHomeAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Banner home
+                </span>
+            </a>
+        </li>*@
+                            @*<li>
+            <a href="/Admin/WebsiteAttribute/MapAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Map
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/PageStoryAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Page_Story
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutHomeAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý About home
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutHospitalAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý About hospital
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutStaffAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý About staff
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutEquipmentAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý About equipment
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutTestimonialAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý About testimonial
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutSocialMediaAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Social Media
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutGoogleAnalyticsAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Google Analytics
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutRecruitAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Recruit
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutContactAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Contact
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutBookingAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Booking
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutServicesAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Services
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutKnowledgeAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Knowledge
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/AboutShopAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Shop
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/WebsiteAttribute/PetInsuranceAttribute" class="dropdown-toggle">
+                <i class=" icon-double-angle-right"></i>
+                <span class="menu-text">
+                    Quản lý Pet Insurance
+                </span>
+            </a>
+        </li>*@
+                            <li>
+                                <a href="/Admin/WebsiteAttribute/HomeAttribute" class="dropdown-toggle">
+                                    <i class=" icon-double-angle-right"></i>
+                                    <span class="menu-text">
+                                        Quản lý Home
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Admin/WebsiteAttribute/AboutAttribute" class="dropdown-toggle">
+                                    <i class=" icon-double-angle-right"></i>
+                                    <span class="menu-text">
+                                        Quản lý About
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Admin/WebsiteAttribute/NewsAttribute" class="dropdown-toggle">
+                                    <i class=" icon-double-angle-right"></i>
+                                    <span class="menu-text">
+                                        Quản lý News
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Admin/WebsiteAttribute/DocumentAttribute" class="dropdown-toggle">
+                                    <i class=" icon-double-angle-right"></i>
+                                    <span class="menu-text">
+                                        Quản lý Document
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/Admin/PermissionAccount" class="dropdown-toggle">
+                            <i class="icon-bookmark"></i>
+                            <span class="menu-text">
+                                Quản lý Account
+                            </span>
+                        </a>
+                    </li>
+                }
+
+                @*<li>
+            <a href="#" class="dropdown-toggle">
+                <i class=" icon-user"></i>
+                <span class="menu-text">
+                    Quản lý khách hàng
+                    <span class="badge badge-primary ">2</span>
+                </span>
+                <b class=""></b>
+            </a>
+            <ul class="submenu" style="overflow: hidden; display: none;">
+                <li>
+                    <a href="/Admin/Profile">
+                        <i class="icon-double-angle-right"></i>
+                        Xem tất cả khách hàng
+                    </a>
+                </li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+
+                    <li>
+                        <a href="/Admin/Profile/Create">
+                            <i class="icon-double-angle-right"></i>
+                            Thêm mới khách hàng
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>*@
+                @*<li>
+            <a href="#" class="dropdown-toggle">
+                <i class=" icon-user"></i>
+                <span class="menu-text">
+                    Quản lý nhân viên
+                    <span class="badge badge-primary ">2</span>
+                </span>
+                <b class=""></b>
+            </a>
+            <ul class="submenu" style="overflow: hidden; display: none;">
+                <li>
+                    <a href="/Admin/Staff">
+                        <i class="icon-double-angle-right"></i>
+                        Xem tất cả nhân viên
+                    </a>
+                </li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+
+                    <li>
+                        <a href="/Admin/Staff/Create">
+                            <i class="icon-double-angle-right"></i>
+                            Thêm mới nhân viên
+                        </a>
+                    </li>
+                }
+            </ul>
+
+        </li>*@
+
+
+                @*<li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-comment-alt"></i>
+                <span class="menu-text">
+                    Quản lý pet
+                    <span class="badge badge-primary ">2</span>
+                </span>
+                <b class=""></b>
+            </a>
+            <ul class="submenu" style="overflow: hidden; display: none;">
+                <li>
+                    <a href="/Admin/PetProfile">
+                        <i class="icon-double-angle-right"></i>
+                        Xem tất cả
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/PetProfile/Create">
+                        <i class="icon-double-angle-right"></i>
+                        Thêm mới thông tin
+                    </a>
+                </li>
+            </ul>
+
+        </li>*@
+                @*<li>
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-edit"></i>
+            <span class="menu-text">
+                Quản lý Comment
+                <span class="badge badge-primary ">2</span>
+            </span>
+            <b class=""></b>
+        </a>
+        <ul class="submenu" style="overflow: hidden; display: none;">
+            <li>
+                <a href="/Admin/Comment">
+                    <i class="icon-double-angle-right"></i>
+                   Xem tất cả comment
+                </a>
+            </li>*@
+                @*<li>
+            <a href="/Admin/Blog/PageStatic?id=16">
+                <i class="icon-double-angle-right"></i>
+                Chuyên khoa
+            </a>
+        </li>*@
+
+                <!--</ul>
+    </li>-->
+                @*<li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-desktop"></i>
+                <span class="menu-text">
+                    Quản lý trang
+                    <span class="badge badge-primary ">1</span>
+                </span>
+                <b class=""></b>
+            </a>
+            <ul class="submenu" style="overflow: hidden; display: none;">
+                <li>
+                    <a href="/Admin/Blog/ManageStaticPage">
+                        <i class="icon-double-angle-right"></i>
+                        Xem tất cả trang
+                    </a>
+                </li>
+            </ul>
+
+        </li>*@
+
+
+
+                <!--<li>
+    <a href="#" class="dropdown-toggle">
+        <i class=" icon-user"></i>
+        <span class="menu-text">
+            Quản lý Album Ảnh
+            <span class="badge badge-primary ">2</span>
+        </span>
+        <b class=""></b>
+    </a>
+    <ul class="submenu" style="overflow: hidden; display: none;">
+        <li>
+            <a href="/Admin/AlbumPhoto">
+                <i class="icon-double-angle-right"></i>
+                Album Bè Du Lịch Labixa
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/AlbumPhotoDiving">
+                <i class="icon-double-angle-right"></i>
+                Album Lặn Biển
+            </a>
+        </li>
+        <li>
+            <a href="/Admin/AlbumPhotoEvent">
+                <i class="icon-double-angle-right"></i>
+                Album Sự Kiện
+            </a>
+        </li>-->
+                @*<li>
+            <a href="/Admin/AlbumPhoto/Create">
+                <i class="icon-double-angle-right"></i>
+                Thêm mới Ảnh
+            </a>
+        </li>*@
+                <!--</ul>
+
+    </li>-->
+                @*@if (User.IsInRole("Admin"))
+        {
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-cogs"></i>
+                    <span class="menu-text">
+                        Quản lý tài khoản
+                        <span class="badge badge-primary ">2</span>
+                    </span>
+                    <b class=""></b>
+                </a>
+                <ul class="submenu" style="overflow: hidden; display: none;">
+                    <li>
+                        <a href="/Admin/PermissionAccount">
+                            <i class="icon-double-angle-right"></i>
+                            Xem tất cả tài khoản
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Staff/Create">
+                            <i class="icon-double-angle-right"></i>
+                            Thêm mới tài khoản
+                        </a>
+                    </li>
+                </ul>
+
+            </li>
+        }*@
+                <li>
+                    <a href="/Account/SignOut">
+                        <i class="icon-home"></i>
+                        <span class="menu-text">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.nav-list -->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            @RenderSection("breadcrumb", required: false)
+
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+    @RenderSection("botscripts", required: false)
+</body>
+
+</html>

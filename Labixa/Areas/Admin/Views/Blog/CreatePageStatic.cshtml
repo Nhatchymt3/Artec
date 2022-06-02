@@ -1,0 +1,197 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.BlogFormModel
+@{
+    ViewBag.Title = "CreatePageStatic";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+}
+@section botscripts{
+    <script>
+        $(document).ready(function () {
+            $('.multipleselect2').select2();
+        });
+    </script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/blog/PageStatic?id=@Model.BlogCategoryId">Quản lý trang tĩnh</a>
+            </li>
+            <li class="active">Thêm mới trang</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="alert alert-block alert-info">
+                Tạo Mới
+            </div>
+            @using (Html.BeginForm("CreatePageStatic", "Blog", null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab1">
+                                <i class="green ace-icon fa fa-home bigger-120"></i>
+                                Nội Dung
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade active in">
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.BlogCategoryId)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.BlogCategoryId, new { @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Title)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Title)
+                                    @Html.ValidationMessageFor(model => model.Title)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.IsAvailable)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.IsAvailable)
+                                    @Html.ValidationMessageFor(model => model.IsAvailable)
+                                </div>
+                            </div>
+
+                            @*<div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Position)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Position)
+                                        @Html.ValidationMessageFor(model => model.Position)
+                                    </div>
+                                </div>*@
+
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.BlogImage)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.BlogImage, "GetImageFromElfinder")
+                                    @Html.ValidationMessageFor(model => model.BlogImage)
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Description)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Description)
+                                    @Html.ValidationMessageFor(model => model.Description)
+                                </div>
+                            </div>
+
+                            @*<div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Tags)
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(model => model.Tags, select2list, new { @class = "multipleselect2 col-xs-12 col-md-8", @name = "states[]", @multiple = "multiple"})
+                                        @Html.ValidationMessageFor(model => model.Tags)
+                                    </div>
+                                </div>*@
+
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Content)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Content, "CkEditor")
+                                    @Html.ValidationMessageFor(model => model.Content)
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+                                    @Html.MyLabelFor(model => model.TitleEng)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.TitleEng)
+                                        @Html.ValidationMessageFor(model => model.TitleEng)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.DescriptionEng)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.DescriptionEng)
+                                        @Html.ValidationMessageFor(model => model.DescriptionEng)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.ContentEng)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.ContentEng, "CkEditor")
+                                        @Html.ValidationMessageFor(model => model.ContentEng)
+                                    </div>
+                                </div>*@
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.ContentTwo)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.ContentTwo, "ckeditor")
+                                    @Html.ValidationMessageFor(model => model.ContentTwo)
+                                </div>
+                            </div>
+                            <!--<div class="form-group ">
+                            @@Html.MyLabelFor(model => model.DescriptionEng)
+                            <div class="col-sm-9">
+                                @@Html.EditorFor(model => model.DescriptionEng, "GetImageFromElfinder")-->
+                            @*<a href="javascrip:void(0)" id="GetElImage" class="btn btn-success getimagefromelfinder"><i class="icon-upload"></i>Chọn ảnh</a>*@
+                            <!--@@Html.ValidationMessageFor(model => model.DescriptionEng)
+                                </div>
+                            </div>-->
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Link)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Link)
+                                    @Html.ValidationMessageFor(model => model.Link)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.ImageUrl)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.ImageUrl, "GetImageFromElfinder")
+                                    @Html.ValidationMessageFor(model => model.ImageUrl)
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+                                @Html.MyLabelFor(model => model.DescriptionEng)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.DescriptionEng, "GetImageFromElfinder")
+                                    @Html.ValidationMessageFor(model => model.DescriptionEng)
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*
+                    partial for group button
+                *@
+                @Html.Partial("_PartialButtonGroup", "/Admin/Blog")
+            }
+        </div>
+    </div>
+</div>
+
+

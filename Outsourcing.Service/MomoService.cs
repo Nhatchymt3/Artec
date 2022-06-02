@@ -45,14 +45,14 @@ namespace Outsourcing.Service
 
         public string testMomo(string name)
         {
-            string endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-            string partnerCode = "MOMOGA7H20210625";
-            string accessKey = "MmXKMMzMfibprAzA";
-            string serectkey = "8oKRjM0bHuUvarosrshnFuJsiqR0uSTW";
+            string endpoint = "";
+            string partnerCode = "";
+            string accessKey = "";
+            string serectkey = "";
             string orderInfo = name;
-            string redirectUrl = "http://localhost:55583/Home/RedirectMomo";
-            string ipnUrl = "http://localhost:55583/Home/PSB";
-            string requestType = "captureWallet";
+            string redirectUrl = "";
+            string ipnUrl = "";
+            string requestType = "";
 
             string amount = "5000";
             string orderId = Guid.NewGuid().ToString();

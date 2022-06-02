@@ -1,0 +1,109 @@
+﻿@using Outsourcing.Data.Models
+@using Labixa.ViewModels
+@model Outsourcing.Data.Models.Blog
+@{
+    ViewBag.Title = "ChiTietTinTuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IndexViewModel indexViewModel = ViewBag.indexViewModel;
+}
+
+<section class="section-header">
+    <div style="" class="content-mb width-cus">
+        <div class="justify-content-between row" style="margin:auto;">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 pl-5 pr-5">
+                        <!--Breadcumb-->
+                        <div class="row">
+                            <div class="breadcrumb">
+                                <a href="/Home/Index" class="m-r-5">Trang chủ</a>
+                                <span class="m-r-5"> > </span>
+                                <a class="color-breadcumb">Bài viết</a>
+                            </div>
+                        </div>
+                        @if (Model != null)
+                        {
+                    <section class="box_left_home mb-3">
+                        <img class="pinterest-img" src="@Model.ImageUrl" alt="@Model.Title" hidden/>
+                        <h1 class="title-detail">
+                            @Model.Title
+                        </h1>
+                        <div class="time_comment_ct mt10">
+                            @{
+                                string date = Model.DateCreated.ToString();
+                                string[] dateSplit = date.Split(' ');
+                            }
+                            <span style="float:left">Cập nhật ngày: @dateSplit[0]</span>
+                        </div>
+                        <div class="flex items-center mt-4 text-xs flex-nowrap">
+                            <span class="relative top-[-3px]" style="font-size:1.5rem;">Chia sẻ:</span>
+                            <ul class="flex">
+                                <li class="ml-1">
+                                    <a class="inline-block facebook-btn" href="/" target="_blank"
+                                       onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes, width=SomeSize, height=SomeSize'); return false;">
+                                        <img class="w-5 h-5" src="/content/tailieu/img/bg-element/facebook.a79480.svg" alt="facebook">
+                                    </a>
+
+                                </li>
+                                <li class="ml-1">
+                                    <a class="inline-block pinterest-btn" href="/" target="_blank"
+                                       onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes, width=SomeSize, height=SomeSize'); return false;">
+                                        <img class="w-5 h-5" src="/content/tailieu/img/bg-element/pinterest.d79965.svg" alt="printerest">
+                                    </a>
+                                </li>
+
+                                <li class="ml-1">
+                                    <a class="inline-block twitter-btn" href="/" target="_blank"
+                                       onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes, width=SomeSize, height=SomeSize'); return false;">
+                                        <img class="w-5 h-5" src="/content/tailieu/img/bg-element/twitter.c79494.svg" alt="twitter">
+                                    </a>
+                                </li>
+                                @*<li class="ml-1">
+                                    <a class="inline-block twitter-btn" style="cursor: pointer"
+                                       onclick="copyToClipboard()">
+                                        <img class="w-5 h-5"
+                                             src="https://img.icons8.com/ios-glyphs/60/000000/link--v1.png"
+                                             alt="Link-Coppy" />
+                                    </a>
+                                </li>*@
+                            </ul>
+                        </div>
+                        <p class="tomtat-detail mt-4 mb-4">
+                            @*Sáng ngày 10 tháng 3 năm 2022, Đảng ủy Khối Dân - Chính - Đảng Thành phố Hồ Chí Minh tổ chức Hội nghị Tổng kết công tác kiểm điểm, đánh giá, xếp loại chất lượng tổ chức Đảng, Đảng viên năm 2021. Hội nghị diễn ra tại hội trường Thành ủy Thành phố Hồ Chí Minh.*@
+                            @Model.Description
+                        </p>
+                        @if (Model.Content != null && Model.Content != "")
+                        {
+                            @Html.Raw(Model.Content)
+                        }
+                        <div class="text-right">
+                            <span class="btnprint" onclick="Common.News.printPost()"><i class="fas fa-print"></i> Bản in</span>
+                        </div>
+                        <div class="hidden">
+                            <input id="LoaiTinID" name="LoaiTinID" type="hidden" value="0">
+                        </div>
+                        <div class="hidden">
+                            <input id="SeoNameChuyenMuc" name="SeoNameChuyenMuc" type="hidden" value="dang-doan-the">
+                        </div>
+
+                        @Html.Partial("_BlogLienQuanPartial", indexViewModel.blogRelated)
+                    </section>
+                        }
+                        else
+                        {
+                            <div class="row  mt-5" style="text-align: center;">
+                                <p>Không có dữ liệu</p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("_RightMenuPartial", indexViewModel)
+        </div>
+    </div>
+</section>
+<script src="/content/tailieu/js/share.js"></script>
+
+

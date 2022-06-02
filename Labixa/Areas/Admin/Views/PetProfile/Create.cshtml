@@ -1,0 +1,248 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.PetProfileFormModel
+@{
+    ViewBag.Title = "Create";
+    var users = ViewBag.users as IEnumerable<Outsourcing.Data.Models.Profile>;
+    var profileList = new SelectList(users, "Id", "LastName");
+
+    var petstatusEnums = from Outsourcing.Core.Common.EnumValue.PetStatus e in Enum.GetValues(typeof(Outsourcing.Core.Common.EnumValue.PetStatus))
+                         select new
+                         {
+                             ID = (int)e,
+                             Name = e.ToString()
+                         };
+    var petstatus = new SelectList(petstatusEnums, "ID", "Name");
+    var genderEnums = from Outsourcing.Core.Common.EnumValue.Gender e in Enum.GetValues(typeof(Outsourcing.Core.Common.EnumValue.Gender))
+                      select new
+                      {
+                          ID = (int)e,
+                          Name = e.ToString()
+                      };
+    var genderList = new SelectList(genderEnums, "ID", "Name");
+}
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/PetProfile">Quản lý Pet</a>
+            </li>
+            <li class="active">Thêm mới Pet</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Thêm mới sản phẩm
+            </div>
+            @using (Html.BeginForm("Create", "PetProfile", null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab1">
+                                <i class="green icon icon-home bigger-120"></i>
+                                Nội dung
+                            </a>
+                        </li>
+
+                        @*<li class="">
+                                <a data-toggle="tab" href="#tab2">
+                                    <i class="red  icon-rocket bigger-120"></i>
+                                    Chỉnh sửa SEO
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab3">
+                                    <i class="blue  icon-picture bigger-120"></i>
+                                    Thuộc tính sản phẩm
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab4">
+                                    <i class="blue  icon-picture bigger-120"></i>
+                                    Hình ảnh
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab5">
+                                    <i class="blue  icon-picture bigger-120"></i>
+                                    Tour Liên Quan
+                                </a>
+                            </li>*@
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade active in">
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Name)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Name)
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.ProfileId)
+
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(model => model.ProfileId, profileList)
+                                    @Html.ValidationMessageFor(model => model.ProfileId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Gender)
+
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(model => model.Gender, genderList)
+                                    @Html.ValidationMessageFor(model => model.Gender)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.DayOfBirth)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.DayOfBirth, new { @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.DayOfBirth)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Type)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Type)
+                                    @Html.ValidationMessageFor(model => model.Type)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Weight)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Weight)
+                                    @Html.ValidationMessageFor(model => model.Weight)
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Height)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Height)
+                                    @Html.ValidationMessageFor(model => model.Height)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Size)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Size)
+                                    @Html.ValidationMessageFor(model => model.Size)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Color)
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Color)
+                                    @Html.ValidationMessageFor(model => model.Color)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.Status)
+
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(model => model.Status, petstatus)
+                                    @Html.ValidationMessageFor(model => model.Status)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.MyLabelFor(model => model.LastUpdate)
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.LastUpdate, new { @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.LastUpdate)
+                                </div>
+                            </div>
+                            @*<div class="form-group ">
+            @Html.MyLabelFor(model => model.)
+            <div class="col-sm-9">
+                @Html.EditorFor(model => model.ProductImage)
+                <a href="javascrip:void(0)" id="GetElImage" class="btn btn-success"><i class="icon-upload"></i>Chọn ảnh</a>
+                @Html.ValidationMessageFor(model => model.ProductImage)
+            </div>
+        </div>*@
+
+
+                            @*<div id="tab2" class="tab-pane fade">
+
+            <div class="form-group ">
+                @Html.MyLabelFor(model => model.MetaKeywords)
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.MetaKeywords)
+                    @Html.ValidationMessageFor(model => model.MetaKeywords)
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.MyLabelFor(model => model.MetaTitle)
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.MetaTitle)
+                    @Html.ValidationMessageFor(model => model.MetaTitle)
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.MyLabelFor(model => model.MetaDescription)
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.MetaDescription)
+                    @Html.ValidationMessageFor(model => model.MetaDescription)
+                </div>
+            </div>
+
+            <div class="form-group ">
+                @Html.MyLabelFor(model => model.Slug)
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.Slug)
+                    @Html.ValidationMessageFor(model => model.Slug)
+                </div>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-pane fade">
+            <div class="form-group ">
+                Bạn cần tạo sản phẩm trước khi chỉnh sửa thuộc tính
+            </div>
+        </div>
+        <div id="tab4" class="tab-pane fade">
+            <div class="form-group ">
+                Bạn cần tạo sản phẩm trước khi chỉnh sửa hình ảnh
+            </div>
+        </div>
+        <div id="tab5" class="tab-pane fade">
+            <div class="form-group ">
+                Bạn cần tạo sản phẩm trước khi chỉnh sửa Tour liên quan
+            </div>
+        </div>*@
+                        </div>
+                    </div>
+
+
+
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/PetProfile")
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "about_us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="header-page fade-up header-page-about-us" style="background-size: 100% auto;">
+    <div class="bounce-in animate4"></div>
+</section>
+<div class="divider"><span></span></div>
+
+<!--start section-->
+<section class="sectionhome">
+    <!--start container-->
+    <div class="container clearfix">
+
+        <div class="grid_12">
+            <div class="titlesection rotate-In-Down-Left">
+                <h1>OUR AGENCY</h1>
+                <h4>LOREM IPSUM DOLOR SIT AMET CONSECTEUR ADIP</h4>
+            </div>
+        </div>
+
+
+        <div class="grid_6 blue fade-left animate1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus, elit vitae fermentum hendrerit, neque erat fringilla nibh, vel sodales sem diam nec nunc. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl</p><br />
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus, elit vitae fermentum hendrerit, neque erat fringilla nibh, vel sodales sem diam nec nunc. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl</p><br />
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus, elit vitae fermentum hendrerit, neque erat fringilla nibh, vel sodales sem diam nec nunc. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl. Donec mattis blandit metus ut volutpat. Quisque orci lectus, sodales at cursus et, gravida quis nisl</p>
+        </div>
+
+
+        <div class="grid_6 blue fade-right animate1">
+
+
+            <!--start accordion-->
+            <div class="accordion accordionlight">
+
+                <h4 class="blue-borderleft firstaccordiontitle">CREATIVE</h4>
+                <div>
+                    <p>
+                        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                        ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                        amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                        odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate
+                    </p>
+                </div>
+
+                <h4 class="green-borderleft">DYNAMIC</h4>
+                <div>
+                    <p>
+                        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                        ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                        amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                        odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                    </p>
+                </div>
+
+                <h4 class="orange-borderleft">PROFESSIONAL</h4>
+                <div>
+                    <p>
+                        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                        ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                        amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                        odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                    </p>
+                </div>
+
+            </div>
+            <!--end accordion-->
+
+        </div>
+
+    </div>
+    <!--end container-->
+
+</section>
+<!--end section-->
+
+
+<div class="divider"><span></span></div>
+
+
+<script src="~/Content/Pioneer/js/jquery.parallax-1.1.3.js"></script>
+<script>
+
+    jQuery(document).ready(function () {
+        $('.sectionparallax').parallax("100%", 0.04);
+        $('.header-page').parallax("100%", 0.1);
+    });
+    //end parallax
+
+
+    //start accordion
+    $(document).ready(function () {
+        $(".accordion").accordion();
+    });
+    //end accordion
+
+
+    //start tooltip
+    $(document).ready(function () {
+        $(".tooltip").tooltip({ position: { my: "top+0 top-75", at: "center center" } });
+    });
+  
+</script>

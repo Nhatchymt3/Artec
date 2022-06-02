@@ -1,0 +1,47 @@
+﻿@using Outsourcing.Core
+@model Outsourcing.Data.Models.ProductAttributeMapping
+@{
+    var template = "";
+    if (Model.ProductAttribute.ControlType == "TextArea")
+    {
+        template = "Ckeditor";
+    }
+    else if (Model.ProductAttribute.ControlType.ToLower().Equals("checkbox"))
+    {
+        template = "CheckBox";
+    }
+    if (Model.Price==null)
+    {
+        Model.Price = 0;
+    }
+}
+<div class="form-group ">
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ProductId)
+    @Html.HiddenFor(model => model.ProductAttributeId)
+    @Html.HiddenFor(model => model.IsRequired)
+    @Html.HiddenFor(model => model.DisplayOrder)
+
+
+    <label class="col-sm-3 control-label no-padding-right" for="">@Model.ProductAttribute.Description</label>
+    <div class="col-sm-3">
+        @Html.EditorFor(model => model.Value, template)
+        @Html.ValidationMessageFor(model => model.Value)
+    </div>
+    <label class="col-sm-1 no-padding-right" for="">Giá thuộc tính</label>
+    <div class="col-sm-3">
+        @Html.EditorFor(model => model.Price, template)
+        @Html.ValidationMessageFor(model => model.Price)
+    </div>
+    <div class="col-sm-2">
+        &nbsp; &nbsp; &nbsp;
+        <a href="/Admin/Product/deleteAttribute?attri=@Model.ProductAttributeId&prodid=@Model.ProductId" class="btn btn-warning">Delete</a>
+    </div>
+</div>
+@*<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right" for="">Bài viết liên quan</label>
+    <div class="col-sm-3">
+        @Html.EditorFor(model => model.Temp_1)
+        <span class="col-xs-12 col-md-8 red">Vui lòng nhập Id sản phẩm ex: 1,2,3,4</span>
+    </div>
+</div>*@

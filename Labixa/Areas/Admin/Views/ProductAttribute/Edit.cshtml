@@ -1,0 +1,91 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.ProductAttributeFormModel
+
+@{
+    ViewBag.Title = "Chỉnh sửa thuộc tính";
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/ManageProduct">Quản lý tin tức</a>
+            </li>
+            <li class="active">Chỉnh sửa thuộc tính</li>
+        </ul>
+    </div>
+}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Chỉnh sửa nội dung
+            </div>
+            @if (Model != null)
+            {
+                using (Html.BeginForm("Edit", "ProductAttribute", null, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab1">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    Nội dung
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade active in">
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Name)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Name)
+                                        @Html.ValidationMessageFor(model => model.Name)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.ControlType)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.ControlType)
+                                        @Html.ValidationMessageFor(model => model.ControlType)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Description)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Description)
+                                        @Html.ValidationMessageFor(model => model.Description)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/ProductAttribute")
+                }
+            }
+            else
+            {
+                <h1>Không tìm thấy thuộc tính!</h1>
+            }
+        </div>
+    </div>
+</div>

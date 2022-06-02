@@ -1,0 +1,133 @@
+﻿@using Outsourcing.Data.Models
+@using Labixa.ViewModels
+@using PagedList.Mvc
+@model PagedList.IPagedList<Product>
+@{
+    ViewBag.Title = "IndexCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IndexViewModel indexViewModel = ViewBag.indexViewModel;
+}
+
+<section class="section-header">
+    <div style="" class="content-mb width-cus">
+        <div class="justify-content-between row" style="margin:auto;">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 pl-5 pr-5">
+                        <!--Breadcumb-->
+                        <div class="row">
+                            <div class="breadcrumb">
+                                <a href="/Home/Index" class="m-r-5">Trang chủ</a>
+                                <span class="m-r-5"> > </span>
+                                <a class="color-breadcumb">@indexViewModel.productCategory.Name</a>
+                            </div>
+                        </div>
+
+                        <section class="box_left_home mb-1 mt-3">
+                            <div class="row">
+                                <div class="p-3 border-radius-10 bg-primary width-fit-content">
+                                    <p class="text-color-white text-uppercase text-weight-700">@indexViewModel.productCategory.Name</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="grid-container-blog margin-item">
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            string day = item.DateCreated.ToString();
+                                            string[] daySplit = day.Split(' ');
+
+                                            <div class="grid-item-blog">
+                                                <div class="simgle-catagory-product">
+                                                    <div class="sss-img">
+                                                        <img src="@item.ProductImage" alt="@item.Name" />
+                                                    </div>
+                                                    <div class="sss-text">
+                                                        <a href="@Url.Action("Detail","Home", new { slug = item.Slug})">
+                                                            <h6 class="maxline-3 text-align-justify" style="height: 36px">@item.Name</h6>
+                                                        </a>
+                                                    </div>
+                                                    <div class="grid-container">
+                                                        <div class="grid-item">
+                                                            <div class="m-r-5">
+                                                                <img class="img-h-12" src="/Content/tailieu/img/bg-element/calendar3.svg">
+                                                            </div>
+                                                            <span>@daySplit[0]</span>
+                                                        </div>
+                                                        <div class="grid-item">
+                                                            <div class="m-r-5">
+                                                                <img class="img-h-12" src="/Content/tailieu/img/bg-element/filetype-pdf.svg">
+                                                            </div>
+                                                            <span>@item.ContentEng MB</span>
+                                                        </div>
+                                                        <div class="grid-item">
+                                                            <div class="m-r-5">
+                                                                <img class="img-h-12" src="/Content/tailieu/img/bg-element/folder-symlink.svg">
+                                                            </div>
+                                                            <strong style="color:red">@item.Price.ToString("#,##0")đ</strong>
+                                                        </div>
+                                                        <div class="grid-item">
+                                                            <div class="m-r-5">
+                                                                <img class="img-h-12" src="/Content/tailieu/img/bg-element/eye.svg">
+                                                            </div>
+                                                            @{
+                                                                if (item.Stock == null)
+                                                                {
+                                                                    <span>0</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@item.Stock</span>
+                                                                }
+                                                            }
+                                                            <div class="m-r-5 m-l-5">
+                                                                <img class="img-h-12" src="/Content/tailieu/img/bg-element/download.svg">
+                                                            </div>
+                                                            @{
+                                                                if (item.LikeProduct == null)
+                                                                {
+                                                                    <span>0</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@item.LikeProduct</span>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="row  mt-5" style="text-align: center;">
+                                            <p>Không có dữ liệu</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-center mb15">
+                                    <div class="pager ">
+
+                                        @Html.PagedListPager(Model, page => Url.Action("IndexCategory", new { indexViewModel.productCategory.Slug, page }))
+
+                                        @*<ul class="pagination justify-content-end"><li class="page-item active"><span class="page-link">1</span></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=2">2</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=3">3</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=4">4</a></li><li class="page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=5">5</a></li><li class="next-page page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=2">›</a></li><li class="last-page page-item"><a class="page-link" href="/tin-moi-nhat?pagenumber=41">»</a></li></ul>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Partial("_RightMenuPartial", indexViewModel)
+        </div>
+    </div>
+</section>
+

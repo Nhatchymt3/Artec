@@ -1,0 +1,344 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.BlogFormModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    SelectList selections;
+    //if (Model.Tags!=null)
+    //{
+    //    selections = new SelectList(Model.Tags.Split(','));
+    //}
+    //else
+    //{
+    //    selections = new SelectList(null);
+    //}
+}
+
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+}
+
+@section botscripts{
+    <script>
+        $(document).ready(function () {
+            $('.multipleselect2').select2();
+        });
+    </script>
+}
+
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/Blog">Quản lý tin tức</a>
+            </li>
+            <li class="active">Chỉnh sửa tin tức</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Chỉnh sửa nội dung
+            </div>
+            @if (Model != null)
+            {
+                using (Html.BeginForm("Edit", "Blog", null, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Slug)
+
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab1">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    Nội dung
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#tab2">
+                                    Chỉnh sửa SEO
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade active in">
+                                <!--<div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right">Tags</label>
+                                    <div class="col-sm-9">
+                                        <select id="mySelect2" class="form-control" multiple="multiple">
+                                            @@{
+                                                foreach (var temp in Model.ListTagBlog)
+                                                {
+                                                    var flag = false;
+                                                    foreach (var item in ViewBag.listTagBlogMap)
+                                                    {
+                                                        if (temp.Value == item.TagId.ToString())
+                                                        {
+                                                            flag = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (flag)
+                                                    {
+                                                        <option selected value="@@temp.Value">@@temp.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@@temp.Value">@@temp.Text</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                       @@Html.Hidden("hfSelected")-->
+                                @*@Html.DropDownList("mySelect2", Model.ListTagBlog, new { multiple = "multiple" })*@
+                                <!--</div>
+                                </div>-->
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.BlogCategoryId)
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(model => model.BlogCategoryId, Model.ListCategory)
+                                        @Html.ValidationMessageFor(model => model.BlogCategoryId)
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right">Bài viết liên quan</label>
+                                    <div class="col-sm-9">
+                                        <select id="mySelect1" class="form-control" multiple="multiple" >
+                                            @{
+                                                foreach (var temp in Model.ListBlogParent)
+                                                {
+                                                    var flag = false;
+
+
+
+                                                    string[] arrStr = Model.BlogParentId.Split(',');    
+                                                    foreach (var varible in arrStr)
+                                                    {
+                                                        if (temp.Value == varible.ToString())
+                                                        {
+                                                            flag = true;
+                                                            //continue;
+                                                        }
+                                                    }
+                                                    if (flag)
+                                                    {
+                                                        <option selected value="@temp.Value">@temp.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@temp.Value">@temp.Text</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                        @Html.Hidden("hfSelected1", Model.BlogParentId)
+                                    </div>
+                                </div>*@
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.BlogParentId)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.BlogParentId)
+                                            <span class="col-xs-12 col-md-8 red">Vui lòng nhập Id bài viết ex: 1,2,3,4</span>
+                                        </div>
+                                    </div>*@
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Title)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Title)
+                                        @Html.ValidationMessageFor(model => model.Title)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.IsAvailable)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.IsAvailable)
+                                        @Html.ValidationMessageFor(model => model.IsAvailable)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Position)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Position)
+                                        @Html.ValidationMessageFor(model => model.Position)
+                                    </div>
+                                </div>*@
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.BlogImage)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.BlogImage, "GetImageFromElfinder")
+                                        @*<a href="javascrip:void(0)" id="GetElImage" class="btn btn-success getimagefromelfinder"><i class="icon-upload"></i>Chọn ảnh</a>*@
+                                        @Html.ValidationMessageFor(model => model.BlogImage)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Description)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Description)
+                                        @Html.ValidationMessageFor(model => model.Description)
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.Tags)
+                                        <div class="col-sm-9">
+                                            @Html.DropDownListFor(model => model.Tags, selections, new { @class = "multipleselect2 col-xs-12 col-md-8", @name = "states[]", @multiple = "multiple" })
+                                            @Html.ValidationMessageFor(model => model.Tags)
+                                        </div>
+                                    </div>*@
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.Content)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Content, "CkEditor")
+                                        @Html.ValidationMessageFor(model => model.Content)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.TitleEng)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.TitleEng)
+                                            @Html.ValidationMessageFor(model => model.TitleEng)
+                                        </div>
+                                    </div>*@
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.DescriptionEng)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.DescriptionEng, "GetImageFromElfinder")
+                                            @Html.ValidationMessageFor(model => model.DescriptionEng)
+                                        </div>
+                                    </div>*@
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.ContentTwo)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.ContentTwo, "CkEditor")
+                                            @Html.ValidationMessageFor(model => model.ContentTwo)
+                                        </div>
+                                    </div>*@
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.Link)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.Link)
+                                            @Html.ValidationMessageFor(model => model.Link)
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        @Html.MyLabelFor(model => model.ImageUrl)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.ImageUrl, "GetImageFromElfinder")
+                                            @Html.ValidationMessageFor(model => model.ImageUrl)
+                                        </div>
+                                    </div>*@
+                            </div>
+
+                            <div id="tab2" class="tab-pane fade">
+
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.MetaKeywords)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.MetaKeywords)
+                                            @Html.ValidationMessageFor(model => model.MetaKeywords)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        @Html.MyLabelFor(model => model.Description)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.Description)
+                                            @Html.ValidationMessageFor(model => model.Description)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        @Html.MyLabelFor(model => model.Slug)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.Slug)
+                                            @Html.ValidationMessageFor(model => model.Slug)
+                                        </div>
+                                    </div>*@
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaKeywords)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaKeywords)
+                                        @Html.ValidationMessageFor(model => model.MetaKeywords)
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaTitle)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaTitle)
+                                        @Html.ValidationMessageFor(model => model.MetaTitle)
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    @Html.MyLabelFor(model => model.MetaDescription)
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.MetaDescription)
+                                        @Html.ValidationMessageFor(model => model.MetaDescription)
+                                    </div>
+                                </div>
+                                @*<div class="form-group ">
+                                        @Html.MyLabelFor(model => model.Slug)
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.Slug)
+                                            @Html.ValidationMessageFor(model => model.Slug)
+                                        </div>
+                                    </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/Blog")
+                }
+            }
+            else
+            {
+                <h1>Không tìm thấy tin tức!</h1>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#mySelect2").select2();
+        $('#mySelect2').on('change', function (e) {
+            console.log($(this).val());
+            $('#hfSelected').val($(this).val());
+        });
+
+    });
+    $(function () {
+        $("#mySelect1").select2();
+        $('#mySelect1').on('change', function (e) {
+            console.log($(this).val());
+            $('#hfSelected1').val($(this).val());
+        });
+    });
+
+</script>

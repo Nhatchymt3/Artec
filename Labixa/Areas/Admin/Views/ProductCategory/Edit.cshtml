@@ -1,0 +1,87 @@
+﻿@using Outsourcing.Core
+@model Labixa.Areas.Admin.ViewModel.ProductCategoryFormModel
+@{
+    ViewBag.Title = "";
+}
+
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/ProductCategory">Quản lý Danh Mục tin</a>
+            </li>
+            <li class="active">Chỉnh sửa Danh Mục Tin</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Chỉnh sửa nội dung
+            </div>
+            @if (Model != null)
+            {
+                using (Html.BeginForm("Edit", "ProductCategory", null, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="tabbable">
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade active in">
+                                <div class="form-group ">
+                                    <label class="col-sm-3 control-label no-padding-right">Tên Danh Mục (*): </label>
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Name)
+                                        @Html.ValidationMessageFor(model => model.Name)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Danh Mục Cha (*) </label>
+                                    <div class="col-sm-9 ">
+                                        @Html.DropDownListFor(model => model.Position, Model.ListCategory)
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-3 control-label no-padding-right">Mô Tả (*): </label>
+                                    <div class="col-sm-9">
+                                        @Html.EditorFor(model => model.Description, "CkEditor")
+                                        @Html.ValidationMessageFor(model => model.Description)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/ProductCategory")
+                }
+            }
+            else
+            {
+                <h1>Không tìm thấy tin tức!</h1>
+            }
+        </div>
+    </div>
+</div>

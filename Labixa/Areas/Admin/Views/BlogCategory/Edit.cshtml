@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Chỉnh sửa tin tức | KLD website";
+}
+@model Labixa.Areas.Admin.ViewModel.BlogCategoryFormModel
+@using Outsourcing.Data.Models
+
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li>
+                <i class="icon-edit"></i>
+                <a href="/Admin/BlogCategory">Quản lý Danh Mục</a>
+            </li>
+            <li class="active">Chỉnh sửa Danh Mục</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Chỉnh sửa Danh Mục
+            </div>
+            @if (Model != null)
+            {
+                <form action="/Admin/BlogCategory/Edit" class="form-horizontal" method="post" novalidate="novalidate">
+                    <input type="hidden" value="@Model.Id" name="Id" />
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Trạng thái (*) </label>
+                        <div class="col-sm-9 ">
+                            <select class="col-xs-10 col-sm-10 valid" id="News_Status" name="Status">
+                                @if (Model.Status)
+                                {
+                                    <option value="true" selected="selected">Hiển thị</option>
+                                    <option value="false">Không hiển thị</option>
+                                }
+                                else
+                                {
+                                    <option value="true">Hiển thị</option>
+                                    <option value="false" selected="selected">Không hiển thị</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Danh Mục Tĩnh (*): </label>
+                        <div class="col-sm-9">
+                            <select class="col-xs-10 col-sm-10 valid" id="IsStaticPage" name="IsStaticPage">
+                                @if (Model.IsStaticPage)
+                                {
+                                    <option value="true" selected="selected">Trang Tĩnh</option>
+                                    <option value="false">Trang Động</option>
+                                }
+                                else
+                                {
+                                    <option value="true">Trang Tĩnh</option>
+                                    <option value="false" selected="selected">Trang Động</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Tên Danh Mục (*): </label>
+                        <div class="col-sm-9">
+                            <input class="col-xs-10 col-sm-10 valid" data-val="true" data-val-required="Tên Danh Mục không được bỏ trống" name="Name" type="text" placeholder="Tên Danh Mục" value="@Model.Name">
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Danh Mục Cha(*) </label>
+                        <div class="col-sm-9 ">
+                            @Html.DropDownListFor(model => model.CategoryParentId, Model.ListCategory)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Vị Trí Đặt: </label>
+                        <div class="col-sm-9">
+                            <input class="col-xs-10 col-sm-10 valid" data-val="true" value="@Model.DisplayOrder" name="DisplayOrder" type="number">
+                        </div>
+                    </div>
+                    <div class="validation-summary-valid validation-message" data-valmsg-summary="true">
+                        <ul>
+                            <li style="display:none"></li>
+                        </ul>
+                    </div>
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/WebsiteAttribute")
+
+                </form>
+            }
+            else
+            {
+                <h1>Có lỗi xảy ra! Không tìm thấy tin tức. Vui lòng quay lại trang quản lý tin tức và thử lại.</h1>
+            }
+        </div>
+    </div>
+</div>

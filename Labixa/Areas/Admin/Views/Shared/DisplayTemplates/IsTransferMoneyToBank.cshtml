@@ -1,0 +1,9 @@
+﻿@model bool
+@if (Model == true)
+{
+    @Html.Encode("Đã nộp")
+}
+@if (Model == false)
+{
+    @Html.Encode("Chưa nộp")
+}

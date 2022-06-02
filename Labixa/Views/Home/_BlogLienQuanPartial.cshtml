@@ -1,0 +1,100 @@
+﻿
+@using Outsourcing.Data.Models
+@*@model Labixa.ViewModels.ProductViewModel*@
+@model IEnumerable<Blog>
+@{
+}
+<div class="left-utilities list-item-utilities mt20 border-top">
+    <div class="font-weight-bold txt_16 mt-2">Các bài viết khác</div>
+    <div class="newslist mt10">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list_news_show_home_next ml-3">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            string day = item.DateCreated.ToString();
+                            string[] daySplit = day.Split(' ');
+
+                            <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                                <h2 class="titlecom-2 description-2 txt_14">
+                                    <a href="@Url.Action("ChiTietTinTuc","Home", new { slug = item.Slug })" title="@item.Title">
+                                        @item.Title <i>(@daySplit[0])</i>
+                                    </a>
+                                </h2>
+                            </li>
+                        }
+                    }
+                    else
+                    {   
+                          <p style="text-align:center">Không có dữ liệu</p>
+                    }
+                    @*<li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/gioi-thieu-bieu-trung-dai-hoi-dai-bieu-doan-tncs-ho-chi-minh-hoc-vien-can-bo-thanh-pho-ho-chi-minh-lan-thu-vii-nhiem-ky-2022-2024" title="Giới thiệu Biểu trưng Đại hội đại biểu Đoàn TNCS Hồ Chí Minh Học viện Cán bộ Thành phố Hồ Chí Minh lần thứ VII, nhiệm kỳ 2022 - 2024">
+                                    Giới thiệu Biểu trưng Đại hội đại biểu Đoàn TNCS Hồ Chí Minh Học viện Cán bộ Thành phố Hồ Chí Minh lần thứ VII, nhiệm kỳ 2022 - 2024 <i>(24/02/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/doan-thanh-nien-hoc-vien-to-chuc-dai-hoi-doan-vien-chi-doan-k5a-luat-nhiem-ky-2022-2023" title="Đoàn Thanh niên Học viện Tổ chức Đại hội đoàn viên Chi đoàn K5A-LUAT nhiệm kỳ 2022 - 2023">
+                                    Đoàn Thanh niên Học viện Tổ chức Đại hội đoàn viên Chi đoàn K5A-LUAT nhiệm kỳ 2022 - 2023 <i>(20/02/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/doan-thanh-nien-hoc-vien-can-bo-thanh-pho-tong-ket-chien-dich-xuan-tinh-nguyen-va-cac-hoat-dong-cham-lo-tet-nam-2022" title="Đoàn Thanh niên Học viện Cán bộ Thành phố Tổng kết Chiến dịch Xuân tình nguyện và các hoạt động chăm lo Tết năm 2022">
+                                    Đoàn Thanh niên Học viện Cán bộ Thành phố Tổng kết Chiến dịch Xuân tình nguyện và các hoạt động chăm lo Tết năm 2022 <i>(20/02/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/chuong-trinh-giao-luu-ra-mat-cuon-sach-loi-noi-lam-nen-co-tich-va-trao-hoc-bong-cho-5-sinh-vien-co-hoan-canh-dac-biet-kho-khan" title="Chương trình giao lưu ra mắt cuốn sách &quot;Lời nói làm nên cổ tích&quot; và trao học bổng cho 5 sinh viên có hoàn cảnh đặc biệt khó khăn">
+                                    Chương trình giao lưu ra mắt cuốn sách "Lời nói làm nên cổ tích" và trao học bổng cho 5 sinh viên có hoàn cảnh đặc biệt khó khăn <i>(20/02/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/hoc-vien-can-bo-thanh-pho-tham-gia-chuong-trinh-hien-mau-an-toan-chung-tay-day-lui-covid-19" title="Học viện Cán bộ Thành phố tham gia chương trình &quot;Hiến máu an toàn - Chung tay đẩy lùi Covid-19&quot;">
+                                    Học viện Cán bộ Thành phố tham gia chương trình "Hiến máu an toàn - Chung tay đẩy lùi Covid-19" <i>(13/02/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/hoc-vien-can-bo-thanh-pho-to-chuc-ky-niem-72-nam-ngay-truyen-thong-hoc-sinh-sinh-vien-va-hoi-sinh-vien-viet-nam" title="Học viện Cán bộ Thành phố tổ chức kỷ niệm 72 năm Ngày Truyền thống học sinh, sinh viên và Hội Sinh viên Việt Nam">
+                                    Học viện Cán bộ Thành phố tổ chức kỷ niệm 72 năm Ngày Truyền thống học sinh, sinh viên và Hội Sinh viên Việt Nam <i>(11/01/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/hoc-vien-can-bo-thanh-pho-to-chuc-le-ra-quan-chien-dich-xuan-tinh-nguyen-lan-thu-5-nam-2022" title="Học viện Cán bộ Thành phố tổ chức Lễ ra quân Chiến dịch &quot;Xuân tình nguyện&quot; lần thứ 5 - Năm 2022">
+                                    Học viện Cán bộ Thành phố tổ chức Lễ ra quân Chiến dịch "Xuân tình nguyện" lần thứ 5 - Năm 2022 <i>(10/01/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/hoc-vien-can-bo-thanh-pho-to-chuc-tham-hoi-tang-qua-to-cong-tac-dac-biet-phong-chong-dich-benh-covid-19" title="Học viện Cán bộ Thành phố tổ chức thăm hỏi tặng quà tổ công tác đặc biệt phòng, chống dịch bệnh Covid-19">
+                                    Học viện Cán bộ Thành phố tổ chức thăm hỏi tặng quà tổ công tác đặc biệt phòng, chống dịch bệnh Covid-19 <i>(03/01/2022)</i>
+                                </a>
+                            </h2>
+                        </li>
+                        <li class="position-relative pt-1 ml-2 pb-1 pl-1 pr-1">
+                            <h2 class="titlecom-2 description-2 txt_14">
+                                <a href="/dang-bo-hoc-vien-can-bo-thanh-pho-chi-bo-phong-to-chuc-hanh-chinh-quan-tri-to-chuc-le-ket-nap-dang-vien-2" title="Đảng bộ Học viện Cán bộ Thành phố, Chi bộ Phòng Tổ chức, hành chính, quản trị tổ chức Lễ Kết nạp Đảng viên">
+                                    Đảng bộ Học viện Cán bộ Thành phố, Chi bộ Phòng Tổ chức, hành chính, quản trị tổ chức Lễ Kết nạp Đảng viên <i>(24/12/2021)</i>
+                                </a>
+                            </h2>
+                        </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

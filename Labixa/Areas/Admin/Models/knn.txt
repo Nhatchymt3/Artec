@@ -1,0 +1,178 @@
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import *
+from PIL import ImageTk, Image
+from pip._internal.utils.misc import tabulate
+from sklearn.neighbors import KNeighborsClassifier
+from dataset_loader import DatasetLoader
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from imutils import paths
+import dataset_loader
+import numpy as np
+import joblib
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore
+from PyQt5.QtGui import *
+
+
+#model = KNeighborsClassifier(n_neighbors=5, metric = 'minkowski', p = 2)
+filename = 'finalized_model.sav'
+# load the model from disk
+model = joblib.load(filename)
+data = ()
+labels = ()
+
+
+
+trainX_file = 'trainX.sav'
+trainX = joblib.load(trainX_file)
+
+testX_file = 'testX.sav'
+testX = joblib.load(testX_file)
+
+trainY_file = 'trainY.sav'
+trainY = joblib.load(trainY_file)
+
+testY_file = 'testY.sav'
+testY = joblib.load(testY_file)
+
+labels_file = 'labels.sav'
+labels = joblib.load(labels_file)
+
+le = LabelEncoder()
+label = le.fit_transform(labels)
+
+
+def load_dataset():
+    # Đọc dữ liệu file ảnh
+    print("[INFO] Loading images")
+    image_paths = list(paths.list_images("./DBCOREL/"))
+    sdl = DatasetLoader()
+    (data, labels) = sdl.load(image_paths, verbose=500)
+    print('Data size =', len(data))
+
+    # Chuyển đổi nhãn cat, dog, panda về dạng số
+    le = LabelEncoder()
+    label = le.fit_transform(labels)
+    # labels = le.fit_transform(labels)
+    print('Done')
+    return (data, labels)
+
+
+
+def train_model():
+    #data, labels = load_dataset()
+    #data_ = data
+    #labels_ = labels
+    # training: 75%, testing: 25%
+    #(trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.25, random_state=42)
+
+    #model.fit(trainX, trainY)
+
+    # Predicting the Test set results
+    y_pred = model.predict(testX)
+
+    # Making the Confusion Matrix
+    ac = accuracy_score(testY, y_pred)
+    print(len(data))
+    #print(classification_report(testY, model.predict(testX), target_names=le.classes_))
+    return ac
+
+#-----------------------------------------------------------------------------------------------------------------------
+# initialise GUI
+top = tk.Tk()
+top.geometry('1600x800')
+top.title('Classification')
+top.configure(background='#CDCDCD')
+label = Label(top, background='#CDCDCD', font=('arial', 15, 'bold'))
+
+
+sign_image = Label(top)
+
+
+def classify(file_path):
+    global label_packed
+
+    img = dataset_loader.combine_feature(file_path)
+    img = np.reshape(img, (1, -1))
+
+    result_label = str(model.predict(img))
+    result_label = result_label.split("'")
+
+    sign = result_label[1]
+    print(sign)
+
+    label.place(relx=0.48, rely=0.13)
+    label.configure(foreground='#011638', text=sign)
+
+
+def show_classify_button(file_path):
+    classify_b = Button(top, text="Classify Image",
+                        command=lambda: classify(file_path),
+                        padx=10, pady=5)
+    classify_b.configure(background='#364156', foreground='white',
+                         font=('arial', 10, 'bold'))
+    classify_b.place(relx=0.79, rely=0.46)
+
+
+def upload_image():
+    try:
+        file_path = filedialog.askopenfilename()
+        uploaded = Image.open(file_path)
+        #uploaded = np.resize(uploaded, (600,400))
+        uploaded.thumbnail((600,
+                            400))
+        im = ImageTk.PhotoImage(uploaded)
+        sign_image.configure(image=im)
+        sign_image.image = im
+        label.configure(text='')
+        show_classify_button(file_path)
+        sign_image.place(relx=0.33, rely=0.20, justify=CENTER)
+
+    except:
+        pass
+
+def show_upload_button():
+    try:
+        #Hiển thị nút up load ảnh
+        upload = Button(top, text="Upload an image", command=upload_image, padx=10, pady=5)
+        upload.configure(background='#364156', foreground='white', font=('arial', 10, 'bold'))
+        upload.pack(side=BOTTOM, pady=50)
+        sign_image.pack(side=BOTTOM, expand=True)
+        label.pack(side=BOTTOM, expand=True)
+
+        #Hiển thị label độ chính xác model
+        ac = train_model()
+        text = 'Accuracy model = %.2f%%' % (ac*100)
+        label_accuracy = Label(top, background='#CDCDCD', font=('arial', 12, 'bold'))
+        #print(text)
+
+        label_accuracy.configure(foreground='#011638', text=text)
+        label_accuracy.place(relx=0.09, rely=0.75)
+
+        message = classification_report(testY, model.predict(testX), target_names=le.classes_)
+        text_box = Text(
+            top,
+            height=17,
+            width=57,
+        )
+        text_box.pack(expand=True)
+        text_box.insert('end', message)
+        text_box.place(relx=0.01, rely=0.25)
+        #text_box.config(state='disabled')
+        #show_classify_button(file_path)
+    except:
+        pass
+
+train_button = Button(top, text="Train", command=show_upload_button, padx=5, pady=5)
+train_button.configure(background='#364156', foreground='white', font=('arial', 10, 'bold'))
+train_button.place(relx=0.09, rely=0.85)
+
+heading = Label(top, text="Classification", pady=20, font=('arial', 20, 'bold'))
+heading.configure(background='#CDCDCD', foreground='#364156')
+heading.pack()
+top.mainloop()

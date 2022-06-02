@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+@model IEnumerable<Outsourcing.Data.Models.BlogCategory>
+@using Outsourcing.Data.Models;
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li class="active">Quản lý Danh Mục</li>
+        </ul>
+    </div>
+}
+@*@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-success" href="/Admin/BlogCategory/Create" style="margin-bottom:10px">Thêm Mới Danh Mục</a>
+}*@
+
+
+<div class="table-header">Danh sách Danh Mục</div>
+
+<table id="blogTable" class="table table-bordered table-striped table-fixed-header">
+    <thead>
+        <tr role="row">
+            <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="STT: activate to sort column descending" style="width: 49px;">STT</th>
+            @*<th class="sorting" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Tên video: activate to sort column ascending" style="width: 256px;">Tin tức</th>*@
+            <th class="sorting" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Tên Danh Mục: activate to sort column ascending" style="width: 256px;">Tên Danh Mục</th>
+            <th class="sorting" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Trạng Thái: activate to sort column ascending" style="width: 257px;">Trạng Thái</th>
+           @* <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Danh Mục Cha: activate to sort column ascending" style="width: 90px;">Danh Mục Cha</th>*@
+          @*  <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Vị Trí: activate to sort column ascending" style="width: 90px;">Vị Trí Đặt</th>*@
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+            {
+                <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 119px;"></th>
+            }
+        </tr>
+    </thead>
+    <tbody role="alert" aria-live="polite" aria-relevant="all">
+        @if (Model != null && Model.Count() > 0)
+        {
+            int count = 0;
+            foreach (var item in Model)
+            {
+                if (item.Name == "None")
+                {
+                    continue;
+                }
+                count++;
+                <tr class="odd">
+                    <td class=" sorting_1">@count</td>
+                    <td class="hidden-480 ">@item.Name</td>
+
+                    @if (!item.Status)
+                    {
+                        <td class="hidden-480">
+                            @*Không  Hiển thị*@
+                            <span class="label label-sm label-warning">Không hiển thị</span>
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="hidden-480 ">
+                            @*Hiển thị*@
+                            <span class="label label-sm label-success">Hiển thị</span>
+                        </td>
+                    }
+                    <!--@@if (item.CategoryParentId == null)
+                    {
+                        <td class="hidden-480">-->
+                            @*không có danh mục cha*@
+                            <!--<span class="label label-sm label-info">Chưa Chọn</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="hidden-480">-->
+                            @*có danh mục cha*@
+                            <!--@if (item.CategoryParentId == 1)
+                            {
+                                <span class="label label-sm label-warning">Trang Chủ</span>
+                            }
+                            else
+                            {
+                                <span class="label label-sm label-warning">@@item.CategoryParent.Name</span>
+                            }
+                        </td>
+                    }-->
+                    <!--<td class="hidden-480">-->
+                        @*không có danh mục cha*@
+                        <!--<span class="label label-sm label-info">@item.DisplayOrder</span>
+                    </td>-->
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <td class=" ">
+                            <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                <a href="/Admin/BlogCategory/Edit?id=@item.Id" class="btn btn-xs btn-info">
+                                    <i class="icon-edit bigger-120"></i>
+                                </a>
+                                @*@if (User.IsInRole("Admin"))
+                                {
+                                    <a data-href="/Admin/BlogCategory/Delete?id=@item.Id" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger">
+                                        <i class="icon-trash bigger-160"></i>
+                                    </a>
+                                }*@
+
+                            </div>
+                        </td>
+                    }
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="hidden-480 ">Bạn thật sự muốn xóa tin tuyển dụng này ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+                <a href="#" class="btn btn-danger danger">Có</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+    });
+</script>

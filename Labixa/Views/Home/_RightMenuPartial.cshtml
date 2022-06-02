@@ -1,0 +1,80 @@
+﻿@using Outsourcing.Data.Models
+@model Labixa.ViewModels.IndexViewModel
+@{ 
+    
+}
+<div class="col-md-4 hidden p-0">
+    <div>
+        <div class="menu-box mb20">
+            <div class="item-qc-left home-box-lightbox">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-tham-khao"})" title="LỚP ĐỐI TƯỢNG 4">
+                    <p class="text-menu">Tài liệu tham khảo</p>
+                </a>
+            </div>
+        </div>
+        <div class="menu-box mb20">
+            <div class="item-qc-left home-box-lightbox">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "luan-van-de-tai"})" title="LỚP ĐỐI TƯỢNG 4">
+                    <p class="text-menu">Luận văn đề tài</p>
+                </a>
+            </div>
+        </div>
+        <div class="menu-box mb20">
+            <div class="item-qc-left home-box-lightbox">
+                <a href="@Url.Action("IndexCategory","Home", new { slug = "tai-lieu-khac"})" title="LỚP ĐỐI TƯỢNG 4">
+                    <p class="text-menu">Tài liệu khác</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="head_news text-uppercase pt-2">
+            <a onclick="return false">
+                Tin tức đọc nhiều
+            </a>
+        </div>
+        <ul class="list_news_300 pkg">
+            @{
+                int i = 1;
+
+                foreach (var item in Model.blogReadMore)
+                {
+                    if (i == 1)
+                    {
+                        <li class="first check-height pb-2" style="">
+                            <a href="@Url.Action("ChiTietTinTuc","Home", new { slug = item.Slug})" title="" class="thumb180 thumbblock">
+                                <img class="news_docnhieu lazyload" data-src="@item.BlogImage" src="@item.BlogImage" width="300" height="180" title="@item.Title" alt="@item.Title">
+                            </a>
+                            <div class="mar10 title_news mt-2">
+                                <a href="@Url.Action("ChiTietTinTuc","Home", new { slug = item.Slug})" title="" class="f18 fontbold news_docnhieu text_ellipsis">
+                                    <span>
+                                        @item.Title
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                        i++;
+                    }
+                    else
+                    {
+                        <li class="check-height pt-1" style="height: 152px;">
+                            <a href="@Url.Action("ChiTietTinTuc","Home", new { slug = item.Slug})" title="Phòng Quản lý đào tạo" class="thumb140x90 thumbblock">
+                                <picture>
+                                    <img class="news_docnhieu lazyload" data-src="@item.BlogImage" src="@item.BlogImage" width="120" height="50" title="@item.Title">
+                                </picture>
+                            </a>
+                            <a href="@Url.Action("ChiTietTinTuc","Home", new { slug = item.Slug})" title="" class="f14 text_ellipsis mt-2">
+                                <span>
+                                    @item.Title
+                                </span>
+                            </a>
+                        </li>
+                        i++;
+                    }
+                }
+            }
+        </ul>
+
+    </div>
+</div>

@@ -1,0 +1,208 @@
+﻿@using Outsourcing.Data.Models
+@model IEnumerable<Profile>
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@section scripts{
+    <script src="/Content/admin/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/Content/admin/js/jquery.dataTables.bootstrap.js" type="text/javascript"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li class="active">Quản lý khách hàng</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success" href="/Admin/Profile/Create" style="margin-bottom:10px">Thêm mới khách hàng</a>
+            }
+
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-sm-6">
+                    <div class="widget-box transparent">
+
+                        <div class="widget-body">
+                            <div class="widget-body-inner" style="display: block">
+                                <div class="widget-main no-padding col-sm-12">
+                                    <div class="profile-user-info profile-user-info-striped">
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name">
+                                                <label for="Remarks">Thể loại</label>
+                                            </div>
+
+                                            <div class="profile-info-value">
+                                                <select class="filter_2">
+                                                    <option value="">Xem hết</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name">
+                                                <label for="Remarks">Trạng thái</label>
+                                            </div>
+
+                                            <div class="profile-info-value">
+                                                <select class="filter_5">
+                                                    <option value="">Xem hết</option>
+                                                    <option value="Hiển thị">Hiển thị</option>
+                                                    <option value="Đang ẩn">Đang ẩn</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="table-header">Danh sách khách hàng</div>
+
+            <table id="profileTable" class="table table-bordered table-striped table-fixed-header">
+                <thead>
+                    <tr role="row">
+                        <th>STT</th>
+                        <th>Họ</th>
+                        <th>Tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Địa chỉ</th>
+                        <th>Điện thoại</th>
+                        <th>Email</th>
+                        <th>Membership</th>
+                        <th>Ngày tạo</th>
+                        <th>Deleted</th>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                    @if (Model != null && Model.Any())
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            count++;
+                            <tr class="odd">
+                                <td class=" sorting_1">@count</td>
+                                <td class="hidden-480 ">@item.LastName</td>
+                                <td class="hidden-480 ">@item.FirstName</td>
+                                <td class="hidden-480 ">@item.Gender</td>
+                                <td class="hidden-480 ">@item.DayOfBirth</td>
+                                <td class="hidden-480 ">@item.Address</td>
+                                <td class="hidden-480 ">@item.PhoneNumber</td>
+                                <td class="hidden-480 ">@item.Email</td>
+                                <td class="hidden-480 ">@item.MemberCardId</td>
+
+                                <td class=" ">@String.Format("{0:dd/MM/yyyy HH:MM}", @item.DateCreated)</td>
+                                <td class="hidden-480 ">@item.Deleted</td>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                {
+                                    <td class=" ">
+                                        <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                            <a href="/Admin/Profile/Edit?profileId=@item.Id" class="btn btn-xs btn-info">
+                                                <i class="icon-edit bigger-160"></i>
+                                            </a>
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <a data-href="/Admin/Profile/Delete?profileId=@item.Id" data-toggle="modal" data-target="#confirm-delete" class="btn btn-xs btn-danger">
+                                                    <i class="icon-trash bigger-160"></i>
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="hidden-480 ">Bạn thật sự muốn xóa khách hàng này ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+                <a href="#" class="btn btn-danger danger">Có</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+    });
+
+    $(document).ready(function () {
+        var table = $("#profileTable").DataTable();
+        //var arrayfilter = [2, 4];
+
+        createDropFilter(table, [2]);
+        bindDropFilter(table, [5]);
+
+    });
+
+    function createDropFilter(table, array) {
+        array.forEach(function (i) {
+            var selector = ".filter_" + i;
+            var filter1 = $(selector);
+            filter1.on('change', function () {
+                table.column(i)
+                    .search($(this).val())
+                    .draw();
+            });
+
+            table.column(i).data().unique().sort().each(function (d, j) {
+                filter1.append('<option value="' + d + '">' + d + '</option>');
+            });
+
+        });
+    }
+    function bindDropFilter(table, array) {
+        array.forEach(function (i) {
+            var selector = ".filter_" + i;
+            var filter1 = $(selector);
+            filter1.on('change', function () {
+                table.column(i)
+                    .search($(this).val())
+                    .draw();
+            });
+        });
+    }
+</script>

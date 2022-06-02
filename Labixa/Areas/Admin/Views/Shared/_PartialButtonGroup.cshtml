@@ -1,0 +1,22 @@
+﻿@model string
+
+<div class="clearfix form-actions">
+    <div class="col-md-offset-3 col-md-9">
+        <button class="btn btn-info" type="submit">
+            <i class="icon-ok bigger-110"></i>
+           Save
+        </button>
+
+        <input class="btn btn-success" type="submit" name="save-continue" value="Save and Continue">
+
+
+
+        &nbsp; &nbsp; &nbsp;
+        <button class="btn" type="reset">
+            <i class="icon-undo bigger-110"></i>
+            Reset
+        </button>
+        &nbsp; &nbsp; &nbsp;
+        <a href="@Model.ToString()" class="btn btn-warning">Back</a>
+    </div>
+</div>

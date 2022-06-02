@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+@model Labixa.Areas.Admin.ViewModel.BlogCategoryFormModel
+@using Outsourcing.Data.Models;
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li><a href="/Admin/BlogCategory/">Quản lý Danh Mục</a></li>
+            <li class="active">Tạo Mới Danh Mục</li>
+        </ul>
+    </div>
+}
+
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Thêm mới Danh Mục
+            </div>
+            <form action="/Admin/BlogCategory/Create" class="form-horizontal" method="post" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Trạng thái (*) </label>
+                    <div class="col-sm-9 ">
+                        <select class="col-xs-10 col-sm-10 valid" id="News_Status" name="Status">
+                            <option value="true">Hiển thị</option>
+                            <option value="false">Không hiển thị</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Danh Mục Tĩnh (*): </label>
+                    <div class="col-sm-9">
+                        <select class="col-xs-10 col-sm-10 valid" id="IsStaticPage" name="IsStaticPage">
+                            <option value="true">Trang Tĩnh</option>
+                            <option value="false" selected="selected">Trang Động</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Tên Danh Mục (*): </label>
+
+                    <div class="col-sm-9">
+                        @* <input class="col-xs-10 col-sm-10 valid" data-val="true" data-val-required="Tên Danh Mục không được bỏ trống" name="Name" type="text" placeholder="Tên Danh Mục">*@
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Danh Mục Cha (*) </label>
+                    <div class="col-sm-9 ">
+                        @Html.DropDownListFor(model => model.CategoryParentId, Model.ListCategory)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Vị Trí Đặt: </label>
+                    <div class="col-sm-9">
+                        <input class="col-xs-10 col-sm-10 valid" data-val="true" name="DisplayOrder" type="number">
+                    </div>
+                </div>
+                <div class="validation-summary-valid validation-message" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>            <div class="clearfix form-actions">
+                    @*
+                        partial for group button
+                    *@
+                    @Html.Partial("_PartialButtonGroup", "/Admin/BlogCategory")
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

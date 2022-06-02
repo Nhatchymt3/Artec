@@ -1,0 +1,78 @@
+﻿@model Labixa.ViewModels.AccountManagement.PermissionEditAccountModel
+@{
+    ViewBag.Title = "EditAccount";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/config.js"></script>
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="/Admin/Dashboard">Home</a>
+            </li>
+            <li><a href="/Admin/PermissionAccount/">Quản lý tài khoản</a></li>
+            <li class="active">Tạo mới tài khoản</li>
+        </ul>
+    </div>
+}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-block alert-info">
+                Thêm mới tài khoản
+            </div>
+            @{
+                using (Html.BeginForm("EditAccount", "PermissionAccount", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m=>m.Id)
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Tên Nhân Viên <span class="red">(*)</span>: </label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(m => m.UserName)
+                        </div>
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Số Điện Thoại: </label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(m => m.PhoneNumber)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Vị trí: </label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(m => m.RoleId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Email: </label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(m => m.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Kích hoạt: </label>
+                        <div class="col-sm-9">
+                            @Html.CheckBoxFor(m => m.Activated)
+                        </div>
+                    </div>
+                    @Html.Partial("_PartialButtonGroup", "/Admin/PermissionAccount")
+
+                }
+            }
+        </div>
+    </div>
+</div>
+

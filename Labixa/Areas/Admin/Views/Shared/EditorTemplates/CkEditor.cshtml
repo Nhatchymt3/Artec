@@ -1,0 +1,24 @@
+﻿@{
+    var fieldName = ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+
+@Html.TextAreaFor(x => x, new { @class = "col-xs-10 col-sm-10 ", @id = fieldName })
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('@fieldName', {
+            height: 450,
+            allowedContent: true,
+            extraPlugins: 'uploadimage',
+            filebrowserBrowseUrl: '@Url.Action("BrowseFile", "File")'
+        });
+        CKEDITOR.editorConfig = function (config) {
+            // Define changes to default configuration here. For example:
+            // config.language = 'fr';
+            // config.uiColor = '#AADC6E';
+            config.contentsCss = '/Content/ckeditor/contents.css';
+            //the next line add the new font to the combobox in CKEditor
+            config.font_names = 'Open Sans;' + config.font_names;
+            config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;15/15px;16/16px;18/18px;20/20px';
+        };
+    });
+</script>

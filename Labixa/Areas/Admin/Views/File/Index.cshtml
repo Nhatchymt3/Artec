@@ -1,0 +1,119 @@
+﻿
+@section head {
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/Content/admin/plugin/elfinder/css/smoothness-1.8.23/jquery-ui-1.8.23.custom.css")" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/Content/admin/plugin/elfinder/css/elfinder.min.css")" />
+}
+
+@{
+    ViewBag.Title = "Thư mục lưu trữ";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section breadcrumb
+{
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">Home</a>
+            </li>
+            <li class="active">Thư mục lưu trữ</li>
+        </ul>
+    </div>
+}
+<div id="elfinder" style="height: 600px">
+    
+</div>
+
+@section scripts {
+
+	<script type="text/javascript" src="@Url.Content("~/Content/admin/plugin/elfinder/js/jquery-1.7.1.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/admin/plugin/elfinder/js/jquery-ui-1.8.11.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/admin/plugin/elfinder/js/elfinder.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/admin/plugin/elfinder/js/i18n/elfinder.ru.js")"></script>
+    <script type="text/javascript">
+
+    $(function () {
+        var myCommands = elFinder.prototype._options.commands;
+        var disabled = ['extract', 'archive', 'help', 'select'];
+        $.each(disabled, function (i, cmd) {
+            (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+        });
+        var selectedFile = null;
+        var options = {
+                @*  url: '@Url.Action("LoadFile","Admin")',*@
+                url: '@Url.Action("LoadFile", "File")',
+                commands: myCommands,
+                lang: 'en',
+                uiOptions: {
+                    toolbar: [
+                        ['back', 'forward'],
+                        ['reload'],
+                        ['home', 'up'],
+                        ['mkdir', 'mkfile', 'upload'],
+                        ['open', 'download'],
+                        ['info'],
+                        ['quicklook'],
+                        ['copy', 'cut', 'paste'],
+                        ['rm'],
+                        ['duplicate', 'rename', 'edit', 'resize'],
+                        ['view', 'sort']
+                    ]
+                },
+                handlers: {
+                    select: function (event, elfinderInstance) {
+
+                        if (event.data.selected.length == 1) {
+                            var item = $('#' + event.data.selected[0]);
+                            if (!item.hasClass('directory')) {
+                                selectedFile = event.data.selected[0];
+                                $('#elfinder-selectFile').show();
+                                return;
+                            }
+                        }
+                        $('#elfinder-selectFile').hide();
+                        selectedFile = null;
+                    }
+                }
+            };
+            $('#elfinder').elfinder(options).elfinder('instance');
+
+            $('.elfinder-toolbar:first').append('<div class="ui-widget-content ui-corner-all elfinder-buttonset" id="elfinder-selectFile" style="display:none; float:right;">' +
+                '<div class="ui-state-default elfinder-button" title="Select" style="width: 100px;"></div>');
+
+            $('#elfinder-selectFile').click(function () {
+                if (selectedFile != null)
+                    $.post('selectFile', { target: selectedFile }, function (response) {
+                        alert(response);
+                    });
+
+            });
+        });
+        function getUrlParam(paramName) {
+            var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i');
+            var match = window.location.search.match(reParam);
+            return (match && match.length > 1) ? match[1] : '';
+        }
+
+        $(function () {
+            var funcNum = getUrlParam('CKEditorFuncNum');
+            var options = {
+                url: 'connector',
+                lang: 'en',
+                getFileCallback: function (file) {
+                    var url = file.url;
+                    if (url.slice(0, options.url.length) == options.url)
+                        url = '/' + url;
+                    window.opener.CKEDITOR.tools.callFunction(funcNum, url);
+                    window.close();
+                },
+            };
+            $('#elfinder').elfinder(options).elfinder('instance');
+        });
+    </script>
+    
+   
+}
